@@ -4,3 +4,6 @@
 [submodule "ThirdParty/SparseHashMap"]
 	path = ThirdParty/SparseHashMap
 	url = https://github.com/greg7mdp/sparsepp.git
+[submodule "ThirdParty/Catch"]
+	path = ThirdParty/Catch
+	url = https://github.com/catchorg/Catch2.git

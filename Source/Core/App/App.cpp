@@ -620,4 +620,17 @@ void App::changeListenerCallback(ChangeBroadcaster *source)
     this->recreateLayout();
 }
 
+#if defined TEST
+
+#if JUCE_WINDOWS
+#pragma comment(linker, "/subsystem:console")
+#endif
+
+#define CATCH_CONFIG_MAIN
+#include "catch.hpp"
+
+#else
+
 START_JUCE_APPLICATION(App)
+
+#endif
