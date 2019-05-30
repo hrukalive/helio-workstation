@@ -18,6 +18,7 @@
 #include "Common.h"
 #include "TrackGroupNode.h"
 #include "ProjectNode.h"
+#include "SerializationKeys.h"
 
 #include "TreeNodeSerializer.h"
 #include "PianoTrackNode.h"

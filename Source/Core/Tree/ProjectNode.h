@@ -38,7 +38,7 @@ class Clip;
 #include "TreeNode.h"
 #include "DocumentOwner.h"
 #include "Transport.h"
-#include "TrackedItemsSource.h"
+//#include "TrackedItemsSource.h"
 #include "ProjectSequencesWrapper.h"
 #include "HybridRollEditMode.h"
 #include "MidiSequence.h"
@@ -48,7 +48,7 @@ class ProjectNode final :
     public TreeNode,
     public DocumentOwner,
     public MidiTrackSource,
-    public VCS::TrackedItemsSource,  // vcs stuff
+    //public VCS::TrackedItemsSource,  // vcs stuff
     public ChangeListener // subscribed to VersionControl
 {
 public:
@@ -153,14 +153,14 @@ public:
     // VCS::TrackedItemsSource
     //===------------------------------------------------------------------===//
 
-    String getVCSId() const override;
-    String getVCSName() const override;
-    int getNumTrackedItems() override;
-    VCS::TrackedItem *getTrackedItem(int index) override;
-    VCS::TrackedItem *initTrackedItem(const Identifier &type,
-        const Uuid &id, const VCS::TrackedItem &newState) override;
-    bool deleteTrackedItem(VCS::TrackedItem *item) override;
-    void onResetState() override;
+    //String getVCSId() const override;
+    //String getVCSName() const override;
+    //int getNumTrackedItems() override;
+    //VCS::TrackedItem *getTrackedItem(int index) override;
+    //VCS::TrackedItem *initTrackedItem(const Identifier &type,
+    //    const Uuid &id, const VCS::TrackedItem &newState) override;
+    //bool deleteTrackedItem(VCS::TrackedItem *item) override;
+    //void onResetState() override;
 
     //===------------------------------------------------------------------===//
     // ChangeListener
@@ -215,8 +215,8 @@ private:
 
     String id;
 
-    ReadWriteLock vcsInfoLock;
-    Array<const VCS::TrackedItem *> vcsItems;
+    //ReadWriteLock vcsInfoLock;
+    //Array<const VCS::TrackedItem *> vcsItems;
 
     ScopedPointer<UndoStack> undoStack;
 

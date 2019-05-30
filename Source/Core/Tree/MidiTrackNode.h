@@ -20,8 +20,8 @@
 #include "TreeNode.h"
 #include "ProjectEventDispatcher.h"
 #include "MidiTrack.h"
-#include "TrackedItem.h"
-#include "Delta.h"
+//#include "TrackedItem.h"
+//#include "Delta.h"
 
 class Pattern;
 class MidiSequence;
@@ -31,8 +31,8 @@ class InstrumentDescription;
 class MidiTrackNode :
     public TreeNode,
     public MidiTrack,
-    public ProjectEventDispatcher,
-    public VCS::TrackedItem
+    public ProjectEventDispatcher//,
+    //public VCS::TrackedItem
 {
 public:
 
@@ -50,9 +50,9 @@ public:
     // VCS::TrackedItem
     //===------------------------------------------------------------------===//
 
-    String getVCSName() const override;
-    ValueTree serializeClipsDelta() const;
-    void resetClipsDelta(const ValueTree &state);
+    //String getVCSName() const override;
+    //ValueTree serializeClipsDelta() const;
+    //void resetClipsDelta(const ValueTree &state);
 
     //===------------------------------------------------------------------===//
     // MidiTrack

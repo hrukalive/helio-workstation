@@ -26,11 +26,11 @@ class ProjectNode;
 #include "../../Themes/PanelBackgroundB.h"
 #include "../../Common/MenuButton.h"
 
-class ProjectPage final : public Component,
-                          protected TransportListener,
-                          protected ChangeListener,
-                          public Label::Listener,
-                          public Button::Listener
+class ProjectPage  : public Component,
+                     protected TransportListener,
+                     protected ChangeListener,
+                     public Label::Listener,
+                     public Button::Listener
 {
 public:
 
@@ -43,8 +43,8 @@ public:
 
     void paint (Graphics& g) override;
     void resized() override;
-    void labelTextChanged(Label* labelThatHasChanged) override;
-    void buttonClicked(Button* buttonThatWasClicked) override;
+    void labelTextChanged (Label* labelThatHasChanged) override;
+    void buttonClicked (Button* buttonThatWasClicked) override;
     void visibilityChanged() override;
     void handleCommandMessage (int commandId) override;
 
@@ -71,29 +71,29 @@ private:
 
     //[/UserVariables]
 
-    UniquePointer<PanelBackgroundB> background;
-    UniquePointer<Label> projectTitleEditor;
-    UniquePointer<Label> projectTitleLabel;
-    UniquePointer<Label> authorEditor;
-    UniquePointer<Label> authorLabel;
-    UniquePointer<Label> descriptionEditor;
-    UniquePointer<Label> descriptionLabel;
-    UniquePointer<Label> locationLabel;
-    UniquePointer<Label> locationText;
-    UniquePointer<Label> contentStatsLabel;
-    UniquePointer<Label> contentStatsText;
-    UniquePointer<Label> vcsStatsLabel;
-    UniquePointer<Label> vcsStatsText;
-    UniquePointer<Label> startTimeLabel;
-    UniquePointer<Label> startTimeText;
-    UniquePointer<Label> lengthLabel;
-    UniquePointer<Label> lengthText;
-    UniquePointer<Component> level1;
-    UniquePointer<Component> level2;
-    UniquePointer<Label> licenseLabel;
-    UniquePointer<Label> licenseEditor;
-    UniquePointer<MenuButton> menuButton;
-    UniquePointer<ImageButton> revealLocationButton;
+    std::unique_ptr<PanelBackgroundB> background;
+    std::unique_ptr<Label> projectTitleEditor;
+    std::unique_ptr<Label> projectTitleLabel;
+    std::unique_ptr<Label> authorEditor;
+    std::unique_ptr<Label> authorLabel;
+    std::unique_ptr<Label> descriptionEditor;
+    std::unique_ptr<Label> descriptionLabel;
+    std::unique_ptr<Label> locationLabel;
+    std::unique_ptr<Label> locationText;
+    std::unique_ptr<Label> contentStatsLabel;
+    std::unique_ptr<Label> contentStatsText;
+    std::unique_ptr<Label> vcsStatsLabel;
+    std::unique_ptr<Label> vcsStatsText;
+    std::unique_ptr<Label> startTimeLabel;
+    std::unique_ptr<Label> startTimeText;
+    std::unique_ptr<Label> lengthLabel;
+    std::unique_ptr<Label> lengthText;
+    std::unique_ptr<Component> level1;
+    std::unique_ptr<Component> level2;
+    std::unique_ptr<Label> licenseLabel;
+    std::unique_ptr<Label> licenseEditor;
+    std::unique_ptr<MenuButton> menuButton;
+    std::unique_ptr<ImageButton> revealLocationButton;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (ProjectPage)
 };

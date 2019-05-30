@@ -37,8 +37,8 @@ class Log;
 #include "Menu/OpenProjectButton.h"
 #include "Menu/CreateProjectButton.h"
 #include "../../Themes/SeparatorHorizontalFadingReversed.h"
-#include "Menu/LoginButton.h"
-#include "UserProfileComponent.h"
+//#include "Menu/LoginButton.h"
+//#include "UserProfileComponent.h"
 #include "UpdatesInfoComponent.h"
 
 class Dashboard final : public Component,
@@ -76,9 +76,9 @@ private:
     UniquePointer<OpenProjectButton> openProjectButton;
     UniquePointer<CreateProjectButton> createProjectButton;
     UniquePointer<SeparatorHorizontalFadingReversed> separator2;
-    UniquePointer<LoginButton> loginButton;
-    UniquePointer<UserProfileComponent> userProfile;
+    //UniquePointer<LoginButton> loginButton;
+    //UniquePointer<UserProfileComponent> userProfile;
     UniquePointer<UpdatesInfoComponent> updatesInfo;
 
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (Dashboard)
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(Dashboard)
 };

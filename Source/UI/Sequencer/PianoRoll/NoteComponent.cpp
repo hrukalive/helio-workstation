@@ -48,6 +48,12 @@ NoteComponent::NoteComponent(PianoRoll &editor, const Note &event, const Clip &c
     this->setWantsKeyboardFocus(false);
     this->setMouseClickGrabsKeyboardFocus(false);
     this->setFloatBounds(this->getRoll().getEventBounds(this));
+    
+    label.setText(event.getLyric(), NotificationType::dontSendNotification);
+    label.setEditable(false, true, false);
+    label.addListener(this);
+    label.setInterceptsMouseClicks(false, false);
+    addAndMakeVisible(&label);
 }
 
 PianoRoll &NoteComponent::getRoll() const noexcept
@@ -72,6 +78,13 @@ void NoteComponent::updateColours()
     this->colourLighter = this->colour.brighter(0.125f).withMultipliedAlpha(1.45f);
     this->colourDarker = this->colour.darker(0.175f).withMultipliedAlpha(1.45f);
     this->colourVolume = this->colour.darker(0.8f).withAlpha(ghost ? 0.f : 0.5f);
+    auto colorBrightness = this->colour.getBrightness();
+    auto textBrightness = (0.8f / (1 + expf(3 * (2 * colorBrightness - 1)))) + 0.1f;
+    if (colorBrightness < 0.5)
+        textBrightness = std::max(textBrightness, 0.6f);
+    else
+        textBrightness = std::min(textBrightness, 0.4f);
+    this->label.setColour(Label::ColourIds::textColourId, this->colour.withBrightness(textBrightness));
 }
 
 bool NoteComponent::canResize() const noexcept
@@ -158,6 +171,17 @@ void NoteComponent::mouseMove(const MouseEvent &e)
 #define forEachSelectedNote(lasso, child) \
     for (int _i = 0; _i < lasso.getNumSelected(); _i++) \
         if (auto *child = dynamic_cast<NoteComponent *>(lasso.getSelectedItem(_i)))
+
+void NoteComponent::labelTextChanged(Label *labelThatHasChanged)
+{
+    if (labelThatHasChanged == &label)
+    {
+        Array<Note> groupBefore, groupAfter;
+        groupBefore.add(this->getNote());
+        groupAfter.add(this->getNote().withLyric(label.getText()));
+        static_cast<PianoSequence *>(this->note.getSequence())->changeGroup(groupBefore, groupAfter, true);
+    }
+}
 
 void NoteComponent::mouseDown(const MouseEvent &e)
 {
@@ -591,7 +615,11 @@ void NoteComponent::mouseUp(const MouseEvent &e)
 }
 
 // This action is still free - TODO something useful:
-void NoteComponent::mouseDoubleClick(const MouseEvent &e) {}
+void NoteComponent::mouseDoubleClick(const MouseEvent &e)
+{
+    if (!this->ghostMode && this->activeState)
+        label.mouseDoubleClick(e);
+}
 
 //===----------------------------------------------------------------------===//
 // Notes painting
@@ -638,6 +666,13 @@ void NoteComponent::paint(Graphics &g) noexcept
             g.fillRect(x1 + i * (w / tuplet), y1, 1.5f, h);
         }
     }
+}
+
+void NoteComponent::resized()
+{
+    auto bound = getLocalBounds().withTrimmedLeft(5);
+    label.setBounds(bound);
+    label.setSize(bound.getWidth(), bound.getHeight());
 }
 
 //===----------------------------------------------------------------------===//

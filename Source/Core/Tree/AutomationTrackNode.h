@@ -17,7 +17,7 @@
 
 #pragma once
 
-#include "AutomationTrackDiffLogic.h"
+//#include "AutomationTrackDiffLogic.h"
 #include "MidiTrackNode.h"
 
 class AutomationTrackNode final : public MidiTrackNode
@@ -32,11 +32,11 @@ public:
     // VCS::TrackedItem
     //===------------------------------------------------------------------===//
 
-    int getNumDeltas() const override;
-    VCS::Delta *getDelta(int index) const override;
-    ValueTree getDeltaData(int deltaIndex) const override;
-    VCS::DiffLogic *getDiffLogic() const override;
-    void resetStateTo(const VCS::TrackedItem &newState) override;
+    //int getNumDeltas() const override;
+    //VCS::Delta *getDelta(int index) const override;
+    //ValueTree getDeltaData(int deltaIndex) const override;
+    //VCS::DiffLogic *getDiffLogic() const override;
+    //void resetStateTo(const VCS::TrackedItem &newState) override;
 
     //===------------------------------------------------------------------===//
     // Serializable
@@ -61,9 +61,9 @@ public:
     void resetControllerDelta(const ValueTree &state);
     void resetEventsDelta(const ValueTree &state);
 
-private:
+//private:
 
-    ScopedPointer<VCS::AutomationTrackDiffLogic> vcsDiffLogic;
-    OwnedArray<VCS::Delta> deltas;
+    //ScopedPointer<VCS::AutomationTrackDiffLogic> vcsDiffLogic;
+    //OwnedArray<VCS::Delta> deltas;
 
 };

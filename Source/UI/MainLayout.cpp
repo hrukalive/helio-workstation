@@ -30,7 +30,7 @@
 #include "ProjectNode.h"
 #include "PianoTrackNode.h"
 #include "PatternEditorNode.h"
-#include "VersionControlNode.h"
+//#include "VersionControlNode.h"
 #include "InitScreen.h"
 #include "SequencerLayout.h"
 #include "JsonSerializer.h"
@@ -334,12 +334,12 @@ void MainLayout::handleCommandMessage(int commandId)
             project->selectChildOfType<PatternEditorNode>();
         }
         break;
-    case CommandIDs::SwitchToVersioningMode:
-        if (auto *project = findParentProjectOfSelectedNode())
-        {
-            project->selectChildOfType<VersionControlNode>();
-        }
-        break;
+    //case CommandIDs::SwitchToVersioningMode:
+    //    if (auto *project = findParentProjectOfSelectedNode())
+    //    {
+    //        project->selectChildOfType<VersionControlNode>();
+    //    }
+    //    break;
     case CommandIDs::ShowRootPage:
         App::Workspace().getTreeRoot()->setSelected();
         break;

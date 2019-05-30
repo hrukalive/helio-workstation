@@ -80,39 +80,39 @@ void MidiTrackNode::importMidi(const MidiMessageSequence &sequence, short timeFo
 // VCS::TrackedItem
 //===----------------------------------------------------------------------===//
 
-String MidiTrackNode::getVCSName() const
-{
-    return this->getXPath();
-}
-
-ValueTree MidiTrackNode::serializeClipsDelta() const
-{
-    ValueTree tree(Serialization::VCS::PatternDeltas::clipsAdded);
-
-    for (int i = 0; i < this->getPattern()->size(); ++i)
-    {
-        const auto clip = this->getPattern()->getUnchecked(i);
-        tree.appendChild(clip->serialize(), nullptr);
-    }
-
-    return tree;
-}
-
-void MidiTrackNode::resetClipsDelta(const ValueTree &state)
-{
-    jassert(state.hasType(Serialization::VCS::PatternDeltas::clipsAdded));
-
-    //this->reset();
-    this->getPattern()->reset();
-
-    Pattern *pattern = this->getPattern();
-    forEachValueTreeChildWithType(state, e, Serialization::Midi::clip)
-    {
-        Clip c(pattern);
-        c.deserialize(e);
-        pattern->silentImport(c);
-    }
-}
+//String MidiTrackNode::getVCSName() const
+//{
+//    return this->getXPath();
+//}
+//
+//ValueTree MidiTrackNode::serializeClipsDelta() const
+//{
+//    ValueTree tree(Serialization::VCS::PatternDeltas::clipsAdded);
+//
+//    for (int i = 0; i < this->getPattern()->size(); ++i)
+//    {
+//        const auto clip = this->getPattern()->getUnchecked(i);
+//        tree.appendChild(clip->serialize(), nullptr);
+//    }
+//
+//    return tree;
+//}
+//
+//void MidiTrackNode::resetClipsDelta(const ValueTree &state)
+//{
+//    jassert(state.hasType(Serialization::VCS::PatternDeltas::clipsAdded));
+//
+//    //this->reset();
+//    this->getPattern()->reset();
+//
+//    Pattern *pattern = this->getPattern();
+//    forEachValueTreeChildWithType(state, e, Serialization::Midi::clip)
+//    {
+//        Clip c(pattern);
+//        c.deserialize(e);
+//        pattern->silentImport(c);
+//    }
+//}
 
 //===----------------------------------------------------------------------===//
 // MidiTrack

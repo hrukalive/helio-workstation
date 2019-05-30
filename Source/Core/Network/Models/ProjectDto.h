@@ -18,7 +18,7 @@
 #pragma once
 
 #include "ApiModel.h"
-#include "RevisionDto.h"
+//#include "RevisionDto.h"
 
 class ProjectDto final : public ApiModel
 {
@@ -31,7 +31,7 @@ public:
     String getAlias() const noexcept { return DTO_PROPERTY(Projects::alias); }
     String getHead() const noexcept { return DTO_PROPERTY(Projects::head); }
     int64 getUpdateTime() const noexcept { return DTO_PROPERTY(Projects::updatedAt); }
-    Array<RevisionDto> getRevisions() const { return DTO_CHILDREN(RevisionDto, Revisions::revisions); }
+    //Array<RevisionDto> getRevisions() const { return DTO_CHILDREN(RevisionDto, Revisions::revisions); }
 
     JUCE_LEAK_DETECTOR(ProjectDto)
 };

@@ -32,7 +32,7 @@ SeparatorVertical::SeparatorVertical()
     this->setPaintingIsUnclipped(true);
     //[/UserPreSize]
 
-    this->setSize(32, 32);
+    setSize (32, 32);
 
     //[Constructor]
     //[/Constructor]
@@ -114,3 +114,6 @@ BEGIN_JUCER_METADATA
 END_JUCER_METADATA
 */
 #endif
+
+
+

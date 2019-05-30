@@ -24,6 +24,7 @@ class PluginScanner;
 
 #include "DocumentOwner.h"
 #include "UserProfile.h"
+#include "RecentProjectInfo.h"
 #include "NavigationHistory.h"
 
 class Workspace final : private Serializable

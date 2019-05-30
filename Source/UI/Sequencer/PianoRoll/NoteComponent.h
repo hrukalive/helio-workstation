@@ -24,7 +24,7 @@ class MidiTrack;
 #include "Note.h"
 #include "Clip.h"
 
-class NoteComponent final : public MidiEventComponent
+class NoteComponent final : public MidiEventComponent, Label::Listener
 {
 public:
 
@@ -69,7 +69,7 @@ public:
     //===------------------------------------------------------------------===//
     // Component
     //===------------------------------------------------------------------===//
-
+    void labelTextChanged(Label *labelThatHasChanged) override;
     bool keyStateChanged(bool isKeyDown) override;
     void modifierKeysChanged(const ModifierKeys &modifiers) override;
     void mouseMove(const MouseEvent &e) override;
@@ -78,11 +78,23 @@ public:
     void mouseUp(const MouseEvent &e) override;
     void mouseDoubleClick(const MouseEvent &e) override;
     void paint(Graphics &g) noexcept override;
+    void resized() override;
 
 private:
-
+    class EditableLabel : public Label
+    {
+    public:
+        void mouseDoubleClick(const MouseEvent& e)
+        {
+            if (isEditableOnDoubleClick()
+                && isEnabled()
+                && !e.mods.isPopupMenu())
+                showEditor();
+        }
+    };
     const Note &note;
     const Clip &clip;
+    EditableLabel label;
 
 private:
 

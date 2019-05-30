@@ -23,7 +23,7 @@
 #include "ModalDialogConfirmation.h"
 #include "PianoTrackNode.h"
 #include "AutomationTrackNode.h"
-#include "VersionControlNode.h"
+//#include "VersionControlNode.h"
 #include "PatternEditorNode.h"
 #include "AutomationSequence.h"
 #include "MainLayout.h"

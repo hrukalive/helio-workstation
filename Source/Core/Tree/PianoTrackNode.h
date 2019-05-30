@@ -17,7 +17,7 @@
 
 #pragma once
 
-#include "PianoTrackDiffLogic.h"
+//#include "PianoTrackDiffLogic.h"
 #include "MidiTrackNode.h"
 
 class PianoTrackNode final : public MidiTrackNode
@@ -32,11 +32,11 @@ public:
     // VCS::TrackedItem
     //===------------------------------------------------------------------===//
 
-    int getNumDeltas() const override;
-    VCS::Delta *getDelta(int index) const override;
-    ValueTree getDeltaData(int deltaIndex) const override;
-    VCS::DiffLogic *getDiffLogic() const override;
-    void resetStateTo(const VCS::TrackedItem &newState) override;
+    //int getNumDeltas() const override;
+    //VCS::Delta *getDelta(int index) const override;
+    //ValueTree getDeltaData(int deltaIndex) const override;
+    //VCS::DiffLogic *getDiffLogic() const override;
+    //void resetStateTo(const VCS::TrackedItem &newState) override;
     
     //===------------------------------------------------------------------===//
     // Serializable
@@ -61,7 +61,7 @@ public:
 
 private:
 
-    ScopedPointer<VCS::PianoTrackDiffLogic> vcsDiffLogic;
-    OwnedArray<VCS::Delta> deltas;
+    //ScopedPointer<VCS::PianoTrackDiffLogic> vcsDiffLogic;
+    //OwnedArray<VCS::Delta> deltas;
 
 };

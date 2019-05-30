@@ -51,36 +51,38 @@ TimeSignatureDialog::TimeSignatureDialog(Component &owner, TimeSignaturesSequenc
       addsNewEvent(shouldAddNewEvent),
       hasMadeChanges(false)
 {
-    this->background.reset(new DialogPanel());
-    this->addAndMakeVisible(background.get());
-    this->comboPrimer.reset(new MobileComboBox::Primer());
-    this->addAndMakeVisible(comboPrimer.get());
+    background.reset (new DialogPanel());
+    addAndMakeVisible (background.get());
+    comboPrimer.reset (new MobileComboBox::Primer());
+    addAndMakeVisible (comboPrimer.get());
 
-    this->messageLabel.reset(new Label(String(),
-                                        TRANS("...")));
-    this->addAndMakeVisible(messageLabel.get());
-    this->messageLabel->setFont(Font (21.00f, Font::plain).withTypefaceStyle ("Regular"));
-    messageLabel->setJustificationType(Justification::centred);
-    messageLabel->setEditable(false, false, false);
+    messageLabel.reset (new Label (String(),
+                                   TRANS("...")));
+    addAndMakeVisible (messageLabel.get());
+    messageLabel->setFont (Font (21.00f, Font::plain).withTypefaceStyle ("Regular"));
+    messageLabel->setJustificationType (Justification::centred);
+    messageLabel->setEditable (false, false, false);
+    messageLabel->setColour (TextEditor::textColourId, Colours::black);
+    messageLabel->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
 
-    this->removeEventButton.reset(new TextButton(String()));
-    this->addAndMakeVisible(removeEventButton.get());
-    removeEventButton->setButtonText(TRANS("..."));
+    removeEventButton.reset (new TextButton (String()));
+    addAndMakeVisible (removeEventButton.get());
+    removeEventButton->setButtonText (TRANS("..."));
     removeEventButton->setConnectedEdges (Button::ConnectedOnRight | Button::ConnectedOnTop);
-    removeEventButton->addListener(this);
+    removeEventButton->addListener (this);
 
-    this->okButton.reset(new TextButton(String()));
-    this->addAndMakeVisible(okButton.get());
-    okButton->setButtonText(TRANS("..."));
+    okButton.reset (new TextButton (String()));
+    addAndMakeVisible (okButton.get());
+    okButton->setButtonText (TRANS("..."));
     okButton->setConnectedEdges (Button::ConnectedOnLeft | Button::ConnectedOnTop);
-    okButton->addListener(this);
+    okButton->addListener (this);
 
-    this->separatorH.reset(new SeparatorHorizontal());
-    this->addAndMakeVisible(separatorH.get());
-    this->separatorV.reset(new SeparatorVertical());
-    this->addAndMakeVisible(separatorV.get());
-    this->textEditor.reset(new TextEditor(String()));
-    this->addAndMakeVisible(textEditor.get());
+    separatorH.reset (new SeparatorHorizontal());
+    addAndMakeVisible (separatorH.get());
+    separatorV.reset (new SeparatorVertical());
+    addAndMakeVisible (separatorV.get());
+    textEditor.reset (new TextEditor (String()));
+    addAndMakeVisible (textEditor.get());
     textEditor->setMultiLine (false);
     textEditor->setReturnKeyStartsNewLine (false);
     textEditor->setReadOnly (false);
@@ -125,7 +127,7 @@ TimeSignatureDialog::TimeSignatureDialog(Component &owner, TimeSignaturesSequenc
     this->separatorH->setAlphaMultiplier(2.5f);
     //[/UserPreSize]
 
-    this->setSize(370, 185);
+    setSize (370, 185);
 
     //[Constructor]
     this->updatePosition();
@@ -189,19 +191,19 @@ void TimeSignatureDialog::resized()
     //[UserPreResize] Add your own custom resize code here..
     //[/UserPreResize]
 
-    background->setBounds((getWidth() / 2) - ((getWidth() - 8) / 2), 4, getWidth() - 8, getHeight() - 8);
-    comboPrimer->setBounds((getWidth() / 2) - ((getWidth() - 24) / 2), 12, getWidth() - 24, getHeight() - 72);
-    messageLabel->setBounds((getWidth() / 2) - ((getWidth() - 32) / 2), 4 + 20, getWidth() - 32, 36);
-    removeEventButton->setBounds(4, getHeight() - 4 - 48, 180, 48);
-    okButton->setBounds(getWidth() - 4 - 181, getHeight() - 4 - 48, 181, 48);
-    separatorH->setBounds(4, getHeight() - 52 - 2, getWidth() - 8, 2);
-    separatorV->setBounds((getWidth() / 2) - (2 / 2), getHeight() - 4 - 48, 2, 48);
-    textEditor->setBounds((getWidth() / 2) - ((getWidth() - 48) / 2), 68, getWidth() - 48, 32);
+    background->setBounds ((getWidth() / 2) - ((getWidth() - 8) / 2), 4, getWidth() - 8, getHeight() - 8);
+    comboPrimer->setBounds ((getWidth() / 2) - ((getWidth() - 24) / 2), 12, getWidth() - 24, getHeight() - 72);
+    messageLabel->setBounds ((getWidth() / 2) - ((getWidth() - 32) / 2), 4 + 20, getWidth() - 32, 36);
+    removeEventButton->setBounds (4, getHeight() - 4 - 48, 180, 48);
+    okButton->setBounds (getWidth() - 4 - 181, getHeight() - 4 - 48, 181, 48);
+    separatorH->setBounds (4, getHeight() - 52 - 2, getWidth() - 8, 2);
+    separatorV->setBounds ((getWidth() / 2) - (2 / 2), getHeight() - 4 - 48, 2, 48);
+    textEditor->setBounds ((getWidth() / 2) - ((getWidth() - 48) / 2), 68, getWidth() - 48, 32);
     //[UserResized] Add your own custom resize handling here..
     //[/UserResized]
 }
 
-void TimeSignatureDialog::buttonClicked(Button* buttonThatWasClicked)
+void TimeSignatureDialog::buttonClicked (Button* buttonThatWasClicked)
 {
     //[UserbuttonClicked_Pre]
     //[/UserbuttonClicked_Pre]
@@ -438,8 +440,7 @@ BEGIN_JUCER_METADATA
     <METHOD name="handleCommandMessage (int commandId)"/>
   </METHODS>
   <BACKGROUND backgroundColour="0">
-    <ROUNDRECT pos="0 0 0M 0M" cornerSize="10.00000000000000000000" fill="solid: 59000000"
-               hasStroke="0"/>
+    <ROUNDRECT pos="0 0 0M 0M" cornerSize="10.0" fill="solid: 59000000" hasStroke="0"/>
   </BACKGROUND>
   <JUCERCOMP name="" id="e96b77baef792d3a" memberName="background" virtualName=""
              explicitFocusOrder="0" pos="0Cc 4 8M 8M" posRelativeH="ac3897c4f32c4354"
@@ -449,9 +450,9 @@ BEGIN_JUCER_METADATA
                     params=""/>
   <LABEL name="" id="cf32360d33639f7f" memberName="messageLabel" virtualName=""
          explicitFocusOrder="0" pos="0Cc 20 32M 36" posRelativeY="e96b77baef792d3a"
-         labelText="..." editableSingleClick="0" editableDoubleClick="0"
-         focusDiscardsChanges="0" fontname="Default font" fontsize="21.00000000000000000000"
-         kerning="0.00000000000000000000" bold="0" italic="0" justification="36"/>
+         edTextCol="ff000000" edBkgCol="0" labelText="..." editableSingleClick="0"
+         editableDoubleClick="0" focusDiscardsChanges="0" fontname="Default font"
+         fontsize="21.0" kerning="0.0" bold="0" italic="0" justification="36"/>
   <TEXTBUTTON name="" id="ccad5f07d4986699" memberName="removeEventButton"
               virtualName="" explicitFocusOrder="0" pos="4 4Rr 180 48" buttonText="..."
               connectedEdges="6" needsCallback="1" radioGroupId="0"/>
@@ -472,3 +473,6 @@ BEGIN_JUCER_METADATA
 END_JUCER_METADATA
 */
 #endif
+
+
+

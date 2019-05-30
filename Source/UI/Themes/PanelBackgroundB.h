@@ -22,7 +22,7 @@ class HelioTheme;
 //[/Headers]
 
 
-class PanelBackgroundB final : public Component
+class PanelBackgroundB  : public Component
 {
 public:
 
@@ -45,3 +45,5 @@ private:
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (PanelBackgroundB)
 };
+
+

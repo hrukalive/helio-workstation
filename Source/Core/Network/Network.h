@@ -56,15 +56,15 @@ public:
     explicit Network(Workspace &workspace);
     ~Network();
     
-    SessionService *getSessionService() const noexcept;
-    ProjectSyncService *getProjectSyncService() const noexcept;
-    ResourceSyncService *getResourceSyncService() const noexcept;
+    //SessionService *getSessionService() const noexcept;
+    //ProjectSyncService *getProjectSyncService() const noexcept;
+    //ResourceSyncService *getResourceSyncService() const noexcept;
 
 private:
 
-    UniquePointer<SessionService> sessionService;
-    UniquePointer<ProjectSyncService> projectSyncService;
-    UniquePointer<ResourceSyncService> resourceSyncService;
+    //UniquePointer<SessionService> sessionService;
+    //UniquePointer<ProjectSyncService> projectSyncService;
+    //UniquePointer<ResourceSyncService> resourceSyncService;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(Network)
 };

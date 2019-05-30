@@ -27,7 +27,7 @@
 #include "PluginScanner.h"
 #include "SettingsNode.h"
 #include "OrchestraPitNode.h"
-#include "VersionControlNode.h"
+//#include "VersionControlNode.h"
 #include "MidiTrackNode.h"
 #include "ProjectNode.h"
 #include "RootNode.h"
@@ -188,23 +188,23 @@ bool Workspace::loadRecentProject(RecentProjectInfo::Ptr info)
     }
     else if (info->hasRemoteCopy()) // and not present locally
     {
-        if (this->userProfile.isLoggedIn())
-        {
-            if (auto *p = this->treeRoot->checkoutProject(info->getProjectId(), info->getTitle()))
-            {
-                this->userProfile.onProjectLocalInfoUpdated(p->getId(),
-                    p->getName(), p->getDocument()->getFullPath());
+        //if (this->userProfile.isLoggedIn())
+        //{
+        //    if (auto *p = this->treeRoot->checkoutProject(info->getProjectId(), info->getTitle()))
+        //    {
+        //        this->userProfile.onProjectLocalInfoUpdated(p->getId(),
+        //            p->getName(), p->getDocument()->getFullPath());
 
-                return true;
-            }
+        //        return true;
+        //    }
 
-            return false;
-        }
-        else
-        {
-            // TODO show message "yo, login pls"
-            return true;
-        }
+        //    return false;
+        //}
+        //else
+        //{
+        //    // TODO show message "yo, login pls"
+        //    return true;
+        //}
     }
 
     return true;

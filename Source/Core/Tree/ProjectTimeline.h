@@ -21,12 +21,12 @@ class MidiEvent;
 class ProjectNode;
 
 #include "MidiTrack.h"
-#include "ProjectTimelineDiffLogic.h"
+//#include "ProjectTimelineDiffLogic.h"
 #include "ProjectEventDispatcher.h"
 
 class ProjectTimeline final :
     public ProjectEventDispatcher,
-    public VCS::TrackedItem,
+    //public VCS::TrackedItem,
     public Serializable
 {
 public:
@@ -49,12 +49,12 @@ public:
     // VCS::TrackedItem
     //===------------------------------------------------------------------===//
 
-    String getVCSName() const override;
-    int getNumDeltas() const override;
-    VCS::Delta *getDelta(int index) const override;
-    ValueTree getDeltaData(int deltaIndex) const override;
-    VCS::DiffLogic *getDiffLogic() const override;
-    void resetStateTo(const VCS::TrackedItem &newState) override;
+    //String getVCSName() const override;
+    //int getNumDeltas() const override;
+    //VCS::Delta *getDelta(int index) const override;
+    //ValueTree getDeltaData(int deltaIndex) const override;
+    //VCS::DiffLogic *getDiffLogic() const override;
+    //void resetStateTo(const VCS::TrackedItem &newState) override;
         
     //===------------------------------------------------------------------===//
     // ProjectEventDispatcher
@@ -98,9 +98,9 @@ public:
 
 private:
 
-    ScopedPointer<VCS::DiffLogic> vcsDiffLogic;
+    //ScopedPointer<VCS::DiffLogic> vcsDiffLogic;
 
-    OwnedArray<VCS::Delta> deltas;
+    //OwnedArray<VCS::Delta> deltas;
     
     ProjectNode &project;
     

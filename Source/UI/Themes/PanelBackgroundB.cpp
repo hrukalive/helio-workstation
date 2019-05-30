@@ -33,7 +33,7 @@ PanelBackgroundB::PanelBackgroundB()
     //[UserPreSize]
     //[/UserPreSize]
 
-    this->setSize(600, 400);
+    setSize (600, 400);
 
     //[Constructor]
     this->setOpaque(true);
@@ -132,3 +132,6 @@ BEGIN_JUCER_METADATA
 END_JUCER_METADATA
 */
 #endif
+
+
+

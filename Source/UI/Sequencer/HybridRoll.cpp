@@ -54,7 +54,7 @@
 #include "TimeSignaturesSequence.h"
 #include "SequencerOperations.h"
 #include "HybridRollListener.h"
-#include "VersionControlNode.h"
+//#include "VersionControlNode.h"
 
 #include "AnnotationDialog.h"
 #include "TimeSignatureDialog.h"
@@ -1205,14 +1205,14 @@ void HybridRoll::handleCommandMessage(int commandId)
 
         this->getTransport().stopSound();
         break;
-    case CommandIDs::VersionControlToggleQuickStash:
-        if (auto *vcs = this->project.findChildOfType<VersionControlNode>())
-        {
-            this->deselectAll(); // a couple of hacks, instead will need to improve event system
-            this->getTransport().stopPlayback(); // with a pre-reset callback or so
-            vcs->toggleQuickStash();
-        }
-        break;
+    //case CommandIDs::VersionControlToggleQuickStash:
+    //    if (auto *vcs = this->project.findChildOfType<VersionControlNode>())
+    //    {
+    //        this->deselectAll(); // a couple of hacks, instead will need to improve event system
+    //        this->getTransport().stopPlayback(); // with a pre-reset callback or so
+    //        vcs->toggleQuickStash();
+    //    }
+    //    break;
     case CommandIDs::AddAnnotation:
         if (auto *sequence = dynamic_cast<AnnotationsSequence *>
             (this->project.getTimeline()->getAnnotations()->getSequence()))

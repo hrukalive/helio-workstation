@@ -24,9 +24,10 @@
 #include "AutomationTrackNode.h"
 #include "OrchestraPitNode.h"
 #include "InstrumentNode.h"
-#include "VersionControlNode.h"
+//#include "VersionControlNode.h"
 #include "PatternEditorNode.h"
 #include "SettingsNode.h"
+#include "SerializationKeys.h"
 
 void TreeNodeSerializer::serializeChildren(const TreeNode &parentItem, ValueTree &parent)
 {
@@ -57,7 +58,7 @@ void TreeNodeSerializer::deserializeChildren(TreeNode &parentItem, const ValueTr
         else if (type == Core::automationTrack) { child = new AutomationTrackNode(""); }
         else if (type == Core::instrumentsList) { child = new OrchestraPitNode(); }
         else if (type == Core::instrumentRoot)  { child = new InstrumentNode(); }
-        else if (type == Core::versionControl)  { child = new VersionControlNode(); }
+        //else if (type == Core::versionControl)  { child = new VersionControlNode(); }
         else if (type == Core::patternSet)      { child = new PatternEditorNode(); }
 
         if (child != nullptr)

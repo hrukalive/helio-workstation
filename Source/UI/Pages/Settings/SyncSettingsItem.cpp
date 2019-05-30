@@ -24,26 +24,26 @@
 //[MiscUserDefs]
 #include "SettingsListItemHighlighter.h"
 #include "SettingsListItemSelection.h"
-#include "ResourceSyncService.h"
-#include "Network.h"
+//#include "ResourceSyncService.h"
+//#include "Network.h"
 #include "Icons.h"
 //[/MiscUserDefs]
 
 SyncSettingsItem::SyncSettingsItem(ListBox &parentListBox)
     : DraggingListBoxComponent(parentListBox.getViewport())
 {
-    this->separator.reset(new SeparatorHorizontal());
-    this->addAndMakeVisible(separator.get());
-    this->toggleButton.reset(new ToggleButton(String()));
-    this->addAndMakeVisible(toggleButton.get());
-    toggleButton->setButtonText(TRANS("..."));
-    toggleButton->addListener(this);
+    separator.reset (new SeparatorHorizontal());
+    addAndMakeVisible (separator.get());
+    toggleButton.reset (new ToggleButton (String()));
+    addAndMakeVisible (toggleButton.get());
+    toggleButton->setButtonText (TRANS("..."));
+    toggleButton->addListener (this);
 
 
     //[UserPreSize]
     //[/UserPreSize]
 
-    this->setSize(350, 32);
+    setSize (350, 32);
 
     //[Constructor]
     //[/Constructor]
@@ -76,13 +76,13 @@ void SyncSettingsItem::resized()
     //[UserPreResize] Add your own custom resize code here..
     //[/UserPreResize]
 
-    separator->setBounds(40, getHeight() - 2, getWidth() - 46, 2);
-    toggleButton->setBounds(8, (getHeight() / 2) + -1 - (24 / 2), getWidth() - 14, 24);
+    separator->setBounds (40, getHeight() - 2, getWidth() - 46, 2);
+    toggleButton->setBounds (8, (getHeight() / 2) + -1 - (24 / 2), getWidth() - 14, 24);
     //[UserResized] Add your own custom resize handling here..
     //[/UserResized]
 }
 
-void SyncSettingsItem::buttonClicked(Button* buttonThatWasClicked)
+void SyncSettingsItem::buttonClicked (Button* buttonThatWasClicked)
 {
     //[UserbuttonClicked_Pre]
     //[/UserbuttonClicked_Pre]
@@ -104,17 +104,17 @@ void SyncSettingsItem::setSelected(bool shouldBeSelected)
 {
     if (shouldBeSelected)
     {
-        const bool newSyncState = !this->toggleButton->getToggleState();
-        auto *syncService = App::Network().getResourceSyncService();
-        if (newSyncState)
-        {
-            syncService->queueSync(this->resource);
-        }
-        else
-        {
-            syncService->queueDelete(this->resource);
-        }
-        this->toggleButton->setToggleState(newSyncState, dontSendNotification);
+        //const bool newSyncState = !this->toggleButton->getToggleState();
+        //auto *syncService = App::Network().getResourceSyncService();
+        //if (newSyncState)
+        //{
+        //    syncService->queueSync(this->resource);
+        //}
+        //else
+        //{
+        //    syncService->queueDelete(this->resource);
+        //}
+        //this->toggleButton->setToggleState(newSyncState, dontSendNotification);
     }
 }
 
@@ -153,3 +153,6 @@ BEGIN_JUCER_METADATA
 END_JUCER_METADATA
 */
 #endif
+
+
+

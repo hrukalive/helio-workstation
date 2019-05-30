@@ -23,8 +23,8 @@
 #include "PianoTrackNode.h"
 #include "AutomationTrackNode.h"
 #include "PatternEditorNode.h"
-#include "VersionControlNode.h"
-#include "VersionControl.h"
+//#include "VersionControlNode.h"
+//#include "VersionControl.h"
 
 #include "PianoTrackActions.h"
 #include "AutomationTrackActions.h"
@@ -40,7 +40,8 @@
 #include "Pattern.h"
 #include "MidiTrack.h"
 #include "MidiEvent.h"
-#include "TrackedItem.h"
+//#include "TrackedItem.h"
+#include "SerializationKeys.h"
 #include "HybridRoll.h"
 #include "UndoStack.h"
 
@@ -96,10 +97,10 @@ void ProjectNode::initialize()
     this->addListener(this->transport);
 
     this->info = new ProjectInfo(*this);
-    this->vcsItems.add(this->info);
+    //this->vcsItems.add(this->info);
 
     this->timeline = new ProjectTimeline(*this, "Project Timeline");
-    this->vcsItems.add(this->timeline);
+    //this->vcsItems.add(this->timeline);
 
     this->transport->seekToPosition(0.0);
 
@@ -453,9 +454,9 @@ void ProjectNode::deserialize(const ValueTree &tree)
 void ProjectNode::reset()
 {
     this->transport->seekToPosition(0.f);
-    this->vcsItems.clear();
-    this->vcsItems.add(this->info);
-    this->vcsItems.add(this->timeline);
+    //this->vcsItems.clear();
+    //this->vcsItems.add(this->info);
+    //this->vcsItems.add(this->timeline);
     this->undoStack->clearUndoHistory();
     TreeNode::reset();
 }
@@ -619,11 +620,11 @@ void ProjectNode::broadcastAddTrack(MidiTrack *const track)
 {
     this->isTracksCacheOutdated = true;
 
-    if (auto *tracked = dynamic_cast<VCS::TrackedItem *>(track))
-    {
-        const ScopedWriteLock lock(this->vcsInfoLock);
-        this->vcsItems.addIfNotAlreadyThere(tracked);
-    }
+    //if (auto *tracked = dynamic_cast<VCS::TrackedItem *>(track))
+    //{
+    //    const ScopedWriteLock lock(this->vcsInfoLock);
+    //    this->vcsItems.addIfNotAlreadyThere(tracked);
+    //}
 
     this->changeListeners.call(&ProjectListener::onAddTrack, track);
     this->sendChangeMessage();
@@ -633,11 +634,11 @@ void ProjectNode::broadcastRemoveTrack(MidiTrack *const track)
 {
     this->isTracksCacheOutdated = true;
 
-    if (auto *tracked = dynamic_cast<VCS::TrackedItem *>(track))
-    {
-        const ScopedWriteLock lock(this->vcsInfoLock);
-        this->vcsItems.removeAllInstancesOf(tracked);
-    }
+    //if (auto *tracked = dynamic_cast<VCS::TrackedItem *>(track))
+    //{
+    //    const ScopedWriteLock lock(this->vcsInfoLock);
+    //    this->vcsItems.removeAllInstancesOf(tracked);
+    //}
 
     this->changeListeners.call(&ProjectListener::onRemoveTrack, track);
     this->sendChangeMessage();
@@ -839,86 +840,86 @@ MidiSequence *ProjectNode::getSequenceByTrackId(const String &trackId)
 // VCS::TrackedItemsSource
 //===----------------------------------------------------------------------===//
 
-String ProjectNode::getVCSId() const
-{
-    return this->getId();
-}
-
-String ProjectNode::getVCSName() const
-{
-    return this->getName();
-}
-
-int ProjectNode::getNumTrackedItems()
-{
-    const ScopedReadLock lock(this->vcsInfoLock);
-    return this->vcsItems.size();
-}
-
-VCS::TrackedItem *ProjectNode::getTrackedItem(int index)
-{
-    const ScopedReadLock lock(this->vcsInfoLock);
-    return const_cast<VCS::TrackedItem *>(this->vcsItems[index]);
-}
-
-VCS::TrackedItem *ProjectNode::initTrackedItem(const Identifier &type,
-    const Uuid &id, const VCS::TrackedItem &newState)
-{
-    if (type == Serialization::Core::pianoTrack)
-    {
-        auto *track = new PianoTrackNode("");
-        track->setVCSUuid(id);
-        this->addChildTreeItem(track, -1, false);
-        // add explicitly, since we aren't going to receive a notification:
-        this->isTracksCacheOutdated = true;
-        this->vcsItems.addIfNotAlreadyThere(track);
-        track->resetStateTo(newState);
-        return track;
-    }
-    if (type == Serialization::Core::automationTrack)
-    {
-        auto *track = new AutomationTrackNode("");
-        track->setVCSUuid(id);
-        this->addChildTreeItem(track, -1, false);
-        this->isTracksCacheOutdated = true;
-        this->vcsItems.addIfNotAlreadyThere(track);
-        track->resetStateTo(newState);
-        return track;
-    }
-    else if (type == Serialization::Core::projectInfo)
-    {
-        this->info->setVCSUuid(id);
-        this->info->resetStateTo(newState);
-        return this->info;
-    }
-    else if (type == Serialization::Core::projectTimeline)
-    {
-        this->timeline->setVCSUuid(id);
-        this->timeline->resetStateTo(newState);
-        return this->timeline;
-    }
-    
-    return nullptr;
-}
-
-bool ProjectNode::deleteTrackedItem(VCS::TrackedItem *item)
-{
-    if (auto *treeItem = dynamic_cast<MidiTrackNode *>(item))
-    {
-        TreeNode::deleteItem(treeItem, false); // don't broadcastRemoveTrack
-        this->vcsItems.removeAllInstancesOf(item);
-        this->isTracksCacheOutdated = true;
-        return true;
-    }
-
-    return false;
-}
-
-void ProjectNode::onResetState()
-{
-    this->broadcastReloadProjectContent();
-    this->broadcastChangeProjectBeatRange();
-}
+//String ProjectNode::getVCSId() const
+//{
+//    return this->getId();
+//}
+//
+//String ProjectNode::getVCSName() const
+//{
+//    return this->getName();
+//}
+//
+//int ProjectNode::getNumTrackedItems()
+//{
+//    const ScopedReadLock lock(this->vcsInfoLock);
+//    return this->vcsItems.size();
+//}
+//
+//VCS::TrackedItem *ProjectNode::getTrackedItem(int index)
+//{
+//    const ScopedReadLock lock(this->vcsInfoLock);
+//    return const_cast<VCS::TrackedItem *>(this->vcsItems[index]);
+//}
+//
+//VCS::TrackedItem *ProjectNode::initTrackedItem(const Identifier &type,
+//    const Uuid &id, const VCS::TrackedItem &newState)
+//{
+//    if (type == Serialization::Core::pianoTrack)
+//    {
+//        auto *track = new PianoTrackNode("");
+//        track->setVCSUuid(id);
+//        this->addChildTreeItem(track, -1, false);
+//        // add explicitly, since we aren't going to receive a notification:
+//        this->isTracksCacheOutdated = true;
+//        this->vcsItems.addIfNotAlreadyThere(track);
+//        track->resetStateTo(newState);
+//        return track;
+//    }
+//    if (type == Serialization::Core::automationTrack)
+//    {
+//        auto *track = new AutomationTrackNode("");
+//        track->setVCSUuid(id);
+//        this->addChildTreeItem(track, -1, false);
+//        this->isTracksCacheOutdated = true;
+//        this->vcsItems.addIfNotAlreadyThere(track);
+//        track->resetStateTo(newState);
+//        return track;
+//    }
+//    else if (type == Serialization::Core::projectInfo)
+//    {
+//        this->info->setVCSUuid(id);
+//        this->info->resetStateTo(newState);
+//        return this->info;
+//    }
+//    else if (type == Serialization::Core::projectTimeline)
+//    {
+//        this->timeline->setVCSUuid(id);
+//        this->timeline->resetStateTo(newState);
+//        return this->timeline;
+//    }
+//    
+//    return nullptr;
+//}
+//
+//bool ProjectNode::deleteTrackedItem(VCS::TrackedItem *item)
+//{
+//    if (auto *treeItem = dynamic_cast<MidiTrackNode *>(item))
+//    {
+//        TreeNode::deleteItem(treeItem, false); // don't broadcastRemoveTrack
+//        this->vcsItems.removeAllInstancesOf(item);
+//        this->isTracksCacheOutdated = true;
+//        return true;
+//    }
+//
+//    return false;
+//}
+//
+//void ProjectNode::onResetState()
+//{
+//    this->broadcastReloadProjectContent();
+//    this->broadcastChangeProjectBeatRange();
+//}
 
 //===----------------------------------------------------------------------===//
 // ChangeListener
@@ -926,12 +927,12 @@ void ProjectNode::onResetState()
 
 void ProjectNode::changeListenerCallback(ChangeBroadcaster *source)
 {
-    if (VersionControl *vcs = dynamic_cast<VersionControl *>(source))
-    {
-        DocumentOwner::sendChangeMessage();
-        // still not sure if it's really needed after commit:
-        //this->getDocument()->forceSave();
-    }
+    //if (VersionControl *vcs = dynamic_cast<VersionControl *>(source))
+    //{
+    //    DocumentOwner::sendChangeMessage();
+    //    // still not sure if it's really needed after commit:
+    //    //this->getDocument()->forceSave();
+    //}
 }
 
 void ProjectNode::rebuildTracksRefsCacheIfNeeded() const

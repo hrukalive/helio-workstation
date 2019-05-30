@@ -21,7 +21,7 @@
 #include "TreeNodeSerializer.h"
 #include "ProjectNode.h"
 #include "ProjectTimeline.h"
-#include "VersionControlNode.h"
+//#include "VersionControlNode.h"
 #include "PatternEditorNode.h"
 #include "TrackGroupNode.h"
 #include "PianoTrackNode.h"
@@ -118,25 +118,25 @@ ProjectNode *RootNode::openProject(const File &file)
     return nullptr;
 }
 
-ProjectNode *RootNode::checkoutProject(const String &id, const String &name)
-{
-    DBG("Cloning project: " + name);
-    if (id.isNotEmpty())
-    {
-        // construct a stub project with no first revision and no tracks,
-        // only the essential stuff it will need anyway:
-        UniquePointer<ProjectNode> project(new ProjectNode(name, id));
-        this->addChildTreeItem(project.get(), 1);
-        UniquePointer<VersionControlNode> vcs(new VersionControlNode());
-        project->addChildTreeItem(vcs.get());
-        project->addChildTreeItem(new PatternEditorNode());
-        vcs->cloneProject();
-        vcs.release();
-        return project.release();
-    }
-
-    return nullptr;
-}
+//ProjectNode *RootNode::checkoutProject(const String &id, const String &name)
+//{
+//    DBG("Cloning project: " + name);
+//    if (id.isNotEmpty())
+//    {
+//        // construct a stub project with no first revision and no tracks,
+//        // only the essential stuff it will need anyway:
+//        UniquePointer<ProjectNode> project(new ProjectNode(name, id));
+//        this->addChildTreeItem(project.get(), 1);
+//        UniquePointer<VersionControlNode> vcs(new VersionControlNode());
+//        project->addChildTreeItem(vcs.get());
+//        project->addChildTreeItem(new PatternEditorNode());
+//        vcs->cloneProject();
+//        vcs.release();
+//        return project.release();
+//    }
+//
+//    return nullptr;
+//}
 
 // this one is for desktops
 ProjectNode *RootNode::addDefaultProject(const File &projectLocation)
@@ -154,17 +154,17 @@ ProjectNode *RootNode::addDefaultProject(const String &projectName)
     return this->createDefaultProjectChildren(newProject);
 }
 
-static VersionControlNode *addVCS(TreeNode *parent)
-{
-    auto vcs = new VersionControlNode();
-    parent->addChildTreeItem(vcs);
-
-    // при создании рутовой ноды vcs, туда надо первым делом коммитить пустой ProjectInfo,
-    // чтобы оной в списке изменений всегда показывался как измененный (не добавленный)
-    // т.к. удалить его нельзя. и смущать юзера подобными надписями тоже не айс.
-    vcs->commitProjectInfo();
-    return vcs;
-}
+//static VersionControlNode *addVCS(TreeNode *parent)
+//{
+//    auto vcs = new VersionControlNode();
+//    parent->addChildTreeItem(vcs);
+//
+//    // при создании рутовой ноды vcs, туда надо первым делом коммитить пустой ProjectInfo,
+//    // чтобы оной в списке изменений всегда показывался как измененный (не добавленный)
+//    // т.к. удалить его нельзя. и смущать юзера подобными надписями тоже не айс.
+//    vcs->commitProjectInfo();
+//    return vcs;
+//}
 
 static PianoTrackNode *addPianoTrack(TreeNode *parent, const String &name)
 {
@@ -192,14 +192,14 @@ void RootNode::importMidi(const File &file)
 {
     auto *project = new ProjectNode(file.getFileNameWithoutExtension());
     this->addChildTreeItem(project);
-    addVCS(project);
+    //addVCS(project);
     project->importMidi(file);
 }
 
 // someday this all should be reworked into xml/json template based generator:
 ProjectNode *RootNode::createDefaultProjectChildren(ProjectNode *project)
 {
-    addVCS(project);
+    //addVCS(project);
     project->addChildTreeItem(new PatternEditorNode());
 
     {

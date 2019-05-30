@@ -34,7 +34,7 @@ MenuButton::MenuButton()
     //[UserPreSize]
     //[/UserPreSize]
 
-    this->setSize(128, 128);
+    setSize (128, 128);
 
     //[Constructor]
     //[/Constructor]
@@ -165,3 +165,6 @@ BEGIN_JUCER_METADATA
 END_JUCER_METADATA
 */
 #endif
+
+
+

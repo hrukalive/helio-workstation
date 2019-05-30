@@ -24,7 +24,7 @@
 #include "Pattern.h"
 #include "PianoTrackNode.h"
 #include "AutomationTrackNode.h"
-#include "VersionControlNode.h"
+//#include "VersionControlNode.h"
 #include "PatternEditorNode.h"
 #include "ProjectNode.h"
 #include "ProjectTimeline.h"

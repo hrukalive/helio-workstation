@@ -18,36 +18,33 @@
 #include "Common.h"
 #include "Network.h"
 #include "Workspace.h"
-#include "SessionService.h"
-#include "ProjectSyncService.h"
-#include "ResourceSyncService.h"
 
 Network::Network(Workspace &workspace)
 {
     // Prepare back-end APIs communication services
-    this->sessionService.reset(new SessionService(workspace.getUserProfile()));
-    this->projectSyncService.reset(new ProjectSyncService());
-    this->resourceSyncService.reset(new ResourceSyncService());
+    //this->sessionService.reset(new SessionService(workspace.getUserProfile()));
+    //this->projectSyncService.reset(new ProjectSyncService());
+    //this->resourceSyncService.reset(new ResourceSyncService());
 }
 
 Network::~Network()
 {
-    this->resourceSyncService = nullptr;
-    this->projectSyncService = nullptr;
-    this->sessionService = nullptr;
+    //this->resourceSyncService = nullptr;
+    //this->projectSyncService = nullptr;
+    //this->sessionService = nullptr;
 }
-
-SessionService *Network::getSessionService() const noexcept
-{
-    return this->sessionService.get();
-}
-
-ProjectSyncService *Network::getProjectSyncService() const noexcept
-{
-    return this->projectSyncService.get();
-}
-
-ResourceSyncService *Network::getResourceSyncService() const noexcept
-{
-    return this->resourceSyncService.get();
-}
+//
+//SessionService *Network::getSessionService() const noexcept
+//{
+//    return this->sessionService.get();
+//}
+//
+//ProjectSyncService *Network::getProjectSyncService() const noexcept
+//{
+//    return this->projectSyncService.get();
+//}
+//
+//ResourceSyncService *Network::getResourceSyncService() const noexcept
+//{
+//    return this->resourceSyncService.get();
+//}

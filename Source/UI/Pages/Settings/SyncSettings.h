@@ -22,9 +22,9 @@
 //[/Headers]
 
 
-class SyncSettings final : public Component,
-                           public ListBoxModel,
-                           private ChangeListener
+class SyncSettings  : public Component,
+                      public ListBoxModel,
+                      private ChangeListener
 {
 public:
 
@@ -59,7 +59,9 @@ private:
     void reloadSyncFlags();
     //[/UserVariables]
 
-    UniquePointer<ListBox> resourcesList;
+    std::unique_ptr<ListBox> resourcesList;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (SyncSettings)
 };
+
+

@@ -18,23 +18,23 @@
 #include "Common.h"
 #include "ProjectInfo.h"
 #include "ProjectNode.h"
-#include "Delta.h"
+//#include "Delta.h"
 
 ProjectInfo::ProjectInfo(ProjectNode &parent) : project(parent)
 {
     using namespace Serialization::VCS;
 
-    this->vcsDiffLogic = new VCS::ProjectInfoDiffLogic(*this);
+    //this->vcsDiffLogic = new VCS::ProjectInfoDiffLogic(*this);
 
     this->initTimestamp = Time::getCurrentTime().toMilliseconds();
     this->license = "Copyright";
     this->author = SystemStats::getFullUserName();
     this->description = "";
 
-    this->deltas.add(new VCS::Delta({}, ProjectInfoDeltas::projectLicense));
-    this->deltas.add(new VCS::Delta({}, ProjectInfoDeltas::projectTitle));
-    this->deltas.add(new VCS::Delta({}, ProjectInfoDeltas::projectAuthor));
-    this->deltas.add(new VCS::Delta(VCS::DeltaDescription("initialized"), ProjectInfoDeltas::projectDescription));
+    //this->deltas.add(new VCS::Delta({}, ProjectInfoDeltas::projectLicense));
+    //this->deltas.add(new VCS::Delta({}, ProjectInfoDeltas::projectTitle));
+    //this->deltas.add(new VCS::Delta({}, ProjectInfoDeltas::projectAuthor));
+    //this->deltas.add(new VCS::Delta(VCS::DeltaDescription("initialized"), ProjectInfoDeltas::projectDescription));
 }
 
 int64 ProjectInfo::getStartTimestamp() const         { return this->initTimestamp; }
@@ -56,78 +56,78 @@ void ProjectInfo::setDescription(String val)    { this->description = val; this-
 // VCS::TrackedItem
 //===----------------------------------------------------------------------===//
 
-String ProjectInfo::getVCSName() const
-{
-    return ("vcs::items::projectinfo");
-}
-
-int ProjectInfo::getNumDeltas() const
-{
-    return this->deltas.size();
-}
-
-VCS::Delta *ProjectInfo::getDelta(int index) const
-{
-    return this->deltas[index];
-}
-
-ValueTree ProjectInfo::getDeltaData(int deltaIndex) const
-{
-    using namespace Serialization::VCS;
-
-    if (this->deltas[deltaIndex]->hasType(ProjectInfoDeltas::projectLicense))
-    {
-        return this->serializeLicenseDelta();
-    }
-    if (this->deltas[deltaIndex]->hasType(ProjectInfoDeltas::projectTitle))
-    {
-        return this->serializeFullNameDelta();
-    }
-    else if (this->deltas[deltaIndex]->hasType(ProjectInfoDeltas::projectAuthor))
-    {
-        return this->serializeAuthorDelta();
-    }
-    else if (this->deltas[deltaIndex]->hasType(ProjectInfoDeltas::projectDescription))
-    {
-        return this->serializeDescriptionDelta();
-    }
-
-    jassertfalse;
-    return {};
-}
-
-VCS::DiffLogic *ProjectInfo::getDiffLogic() const
-{
-    return this->vcsDiffLogic;
-}
-
-void ProjectInfo::resetStateTo(const TrackedItem &newState)
-{
-    using namespace Serialization::VCS;
-
-    for (int i = 0; i < newState.getNumDeltas(); ++i)
-    {
-        const VCS::Delta *newDelta = newState.getDelta(i);
-        const auto newDeltaData(newState.getDeltaData(i));
-        
-        if (newDelta->hasType(ProjectInfoDeltas::projectLicense))
-        {
-            this->resetLicenseDelta(newDeltaData);
-        }
-        else if (newDelta->hasType(ProjectInfoDeltas::projectTitle))
-        {
-            this->resetFullNameDelta(newDeltaData);
-        }
-        else if (newDelta->hasType(ProjectInfoDeltas::projectAuthor))
-        {
-            this->resetAuthorDelta(newDeltaData);
-        }
-        else if (newDelta->hasType(ProjectInfoDeltas::projectDescription))
-        {
-            this->resetDescriptionDelta(newDeltaData);
-        }
-    }
-}
+//String ProjectInfo::getVCSName() const
+//{
+//    return ("vcs::items::projectinfo");
+//}
+//
+//int ProjectInfo::getNumDeltas() const
+//{
+//    return this->deltas.size();
+//}
+//
+//VCS::Delta *ProjectInfo::getDelta(int index) const
+//{
+//    return this->deltas[index];
+//}
+//
+//ValueTree ProjectInfo::getDeltaData(int deltaIndex) const
+//{
+//    using namespace Serialization::VCS;
+//
+//    if (this->deltas[deltaIndex]->hasType(ProjectInfoDeltas::projectLicense))
+//    {
+//        return this->serializeLicenseDelta();
+//    }
+//    if (this->deltas[deltaIndex]->hasType(ProjectInfoDeltas::projectTitle))
+//    {
+//        return this->serializeFullNameDelta();
+//    }
+//    else if (this->deltas[deltaIndex]->hasType(ProjectInfoDeltas::projectAuthor))
+//    {
+//        return this->serializeAuthorDelta();
+//    }
+//    else if (this->deltas[deltaIndex]->hasType(ProjectInfoDeltas::projectDescription))
+//    {
+//        return this->serializeDescriptionDelta();
+//    }
+//
+//    jassertfalse;
+//    return {};
+//}
+//
+//VCS::DiffLogic *ProjectInfo::getDiffLogic() const
+//{
+//    return this->vcsDiffLogic;
+//}
+//
+//void ProjectInfo::resetStateTo(const TrackedItem &newState)
+//{
+//    using namespace Serialization::VCS;
+//
+//    for (int i = 0; i < newState.getNumDeltas(); ++i)
+//    {
+//        const VCS::Delta *newDelta = newState.getDelta(i);
+//        const auto newDeltaData(newState.getDeltaData(i));
+//        
+//        if (newDelta->hasType(ProjectInfoDeltas::projectLicense))
+//        {
+//            this->resetLicenseDelta(newDeltaData);
+//        }
+//        else if (newDelta->hasType(ProjectInfoDeltas::projectTitle))
+//        {
+//            this->resetFullNameDelta(newDeltaData);
+//        }
+//        else if (newDelta->hasType(ProjectInfoDeltas::projectAuthor))
+//        {
+//            this->resetAuthorDelta(newDeltaData);
+//        }
+//        else if (newDelta->hasType(ProjectInfoDeltas::projectDescription))
+//        {
+//            this->resetDescriptionDelta(newDeltaData);
+//        }
+//    }
+//}
 
 //===----------------------------------------------------------------------===//
 // Serializable
@@ -139,7 +139,7 @@ ValueTree ProjectInfo::serialize() const
 
     ValueTree tree(Serialization::Core::projectInfo);
 
-    this->serializeVCSUuid(tree);
+    //this->serializeVCSUuid(tree);
 
     tree.setProperty(Serialization::Core::projectTimeStamp, String(this->initTimestamp), nullptr);
     tree.setProperty(ProjectInfoDeltas::projectLicense, this->getLicense(), nullptr);
@@ -160,7 +160,7 @@ void ProjectInfo::deserialize(const ValueTree &tree)
 
     if (!root.isValid()) { return; }
 
-    this->deserializeVCSUuid(root);
+    //this->deserializeVCSUuid(root);
 
     this->initTimestamp = root.getProperty(Serialization::Core::projectTimeStamp);
     this->license = root.getProperty(ProjectInfoDeltas::projectLicense);

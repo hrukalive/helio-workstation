@@ -30,7 +30,7 @@
 #include "DashboardMenu.h"
 #include "LogoFader.h"
 #include "Workspace.h"
-#include "SessionService.h"
+//#include "SessionService.h"
 #include "IconComponent.h"
 #include "UserProfile.h"
 #include "CommandIDs.h"
@@ -64,13 +64,13 @@ Dashboard::Dashboard(MainLayout &workspaceRef)
     this->addAndMakeVisible(separator2.get());
     separator2->setBounds(264, 104, 488, 3);
 
-    this->loginButton.reset(new LoginButton());
-    this->addAndMakeVisible(loginButton.get());
-    loginButton->setBounds(400, 120, 272, 32);
+    //this->loginButton.reset(new LoginButton());
+    //this->addAndMakeVisible(loginButton.get());
+    //loginButton->setBounds(400, 120, 272, 32);
 
-    this->userProfile.reset(new UserProfileComponent());
-    this->addAndMakeVisible(userProfile.get());
-    userProfile->setBounds(400, 120, 272, 32);
+    //this->userProfile.reset(new UserProfileComponent());
+    //this->addAndMakeVisible(userProfile.get());
+    //userProfile->setBounds(400, 120, 272, 32);
 
     this->updatesInfo.reset(new UpdatesInfoComponent());
     this->addAndMakeVisible(updatesInfo.get());
@@ -105,8 +105,8 @@ Dashboard::~Dashboard()
     openProjectButton = nullptr;
     createProjectButton = nullptr;
     separator2 = nullptr;
-    loginButton = nullptr;
-    userProfile = nullptr;
+    //loginButton = nullptr;
+    //userProfile = nullptr;
     updatesInfo = nullptr;
 
     //[Destructor]
@@ -157,13 +157,13 @@ void Dashboard::changeListenerCallback(ChangeBroadcaster *source)
 
 void Dashboard::updateProfileViews()
 {
-    const bool loggedIn = App::Workspace().getUserProfile().isLoggedIn();
-    this->loginButton->setVisible(!loggedIn);
-    this->userProfile->setVisible(loggedIn);
-    if (loggedIn)
-    {
-        this->userProfile->updateProfileInfo();
-    }
+    //const bool loggedIn = App::Workspace().getUserProfile().isLoggedIn();
+    //this->loginButton->setVisible(!loggedIn);
+    //this->userProfile->setVisible(loggedIn);
+    //if (loggedIn)
+    //{
+    //    this->userProfile->updateProfileInfo();
+    //}
     this->projectsList->updateListContent();
 }
 //[/MiscUserCode]

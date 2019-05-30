@@ -24,8 +24,8 @@
 
 #include "../../Themes/SeparatorHorizontal.h"
 
-class SyncSettingsItem final : public DraggingListBoxComponent,
-                               public Button::Listener
+class SyncSettingsItem  : public DraggingListBoxComponent,
+                          public Button::Listener
 {
 public:
 
@@ -42,7 +42,7 @@ public:
 
     void paint (Graphics& g) override;
     void resized() override;
-    void buttonClicked(Button* buttonThatWasClicked) override;
+    void buttonClicked (Button* buttonThatWasClicked) override;
 
 
 private:
@@ -52,8 +52,10 @@ private:
     BaseResource::Ptr resource;
     //[/UserVariables]
 
-    UniquePointer<SeparatorHorizontal> separator;
-    UniquePointer<ToggleButton> toggleButton;
+    std::unique_ptr<SeparatorHorizontal> separator;
+    std::unique_ptr<ToggleButton> toggleButton;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (SyncSettingsItem)
 };
+
+

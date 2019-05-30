@@ -18,7 +18,7 @@
 #pragma once
 
 class Config;
-class Network;
+//class Network;
 class Workspace;
 class MainWindow;
 class MainLayout;
@@ -100,7 +100,7 @@ private:
     UniquePointer<class Config> config;
     UniquePointer<class Workspace> workspace;
     UniquePointer<class MainWindow> window;
-    UniquePointer<class Network> network;
+    //UniquePointer<class Network> network;
 
 private:
     

@@ -37,8 +37,8 @@
 
 SyncSettings::SyncSettings()
 {
-    this->resourcesList.reset(new ListBox());
-    this->addAndMakeVisible(resourcesList.get());
+    resourcesList.reset (new ListBox());
+    addAndMakeVisible (resourcesList.get());
 
 
     //[UserPreSize]
@@ -48,10 +48,10 @@ SyncSettings::SyncSettings()
     this->setPaintingIsUnclipped(true);
     //[/UserPreSize]
 
-    this->setSize(600, 265);
+    setSize (600, 265);
 
     //[Constructor]
-    
+
     this->reloadConfigsList();
     this->reloadSyncFlags();
 
@@ -101,7 +101,7 @@ void SyncSettings::resized()
     //[UserPreResize] Add your own custom resize code here..
     //[/UserPreResize]
 
-    resourcesList->setBounds(0, 0, getWidth() - 0, getHeight() - 0);
+    resourcesList->setBounds (0, 0, getWidth() - 0, getHeight() - 0);
     //[UserResized] Add your own custom resize handling here..
     //[/UserResized]
 }
@@ -247,3 +247,6 @@ BEGIN_JUCER_METADATA
 END_JUCER_METADATA
 */
 #endif
+
+
+

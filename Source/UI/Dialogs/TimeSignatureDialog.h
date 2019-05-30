@@ -29,10 +29,10 @@ class TimeSignaturesSequence;
 #include "../Themes/SeparatorHorizontal.h"
 #include "../Themes/SeparatorVertical.h"
 
-class TimeSignatureDialog final : public FadingDialog,
-                                  public TextEditor::Listener,
-                                  private Timer,
-                                  public Button::Listener
+class TimeSignatureDialog  : public FadingDialog,
+                             public TextEditor::Listener,
+                             private Timer,
+                             public Button::Listener
 {
 public:
 
@@ -46,7 +46,7 @@ public:
 
     void paint (Graphics& g) override;
     void resized() override;
-    void buttonClicked(Button* buttonThatWasClicked) override;
+    void buttonClicked (Button* buttonThatWasClicked) override;
     void visibilityChanged() override;
     void parentHierarchyChanged() override;
     void parentSizeChanged() override;
@@ -82,14 +82,16 @@ private:
 
     //[/UserVariables]
 
-    UniquePointer<DialogPanel> background;
-    UniquePointer<MobileComboBox::Primer> comboPrimer;
-    UniquePointer<Label> messageLabel;
-    UniquePointer<TextButton> removeEventButton;
-    UniquePointer<TextButton> okButton;
-    UniquePointer<SeparatorHorizontal> separatorH;
-    UniquePointer<SeparatorVertical> separatorV;
-    UniquePointer<TextEditor> textEditor;
+    std::unique_ptr<DialogPanel> background;
+    std::unique_ptr<MobileComboBox::Primer> comboPrimer;
+    std::unique_ptr<Label> messageLabel;
+    std::unique_ptr<TextButton> removeEventButton;
+    std::unique_ptr<TextButton> okButton;
+    std::unique_ptr<SeparatorHorizontal> separatorH;
+    std::unique_ptr<SeparatorVertical> separatorV;
+    std::unique_ptr<TextEditor> textEditor;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (TimeSignatureDialog)
 };
+
+

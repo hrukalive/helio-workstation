@@ -23,7 +23,7 @@ class IconComponent;
 //[/Headers]
 
 
-class MenuButton final : public HighlightedComponent
+class MenuButton  : public HighlightedComponent
 {
 public:
 
@@ -50,3 +50,5 @@ private:
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MenuButton)
 };
+
+

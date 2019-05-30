@@ -27,8 +27,9 @@
 #include "Instrument.h"
 #include "OrchestraPit.h"
 
-#include "Delta.h"
-#include "PianoTrackDiffLogic.h"
+#include "SerializationKeys.h"
+//#include "Delta.h"
+//#include "PianoTrackDiffLogic.h"
 
 PianoTrackNode::PianoTrackNode(const String &name) :
     MidiTrackNode(name, Serialization::Core::pianoTrack)
@@ -39,14 +40,14 @@ PianoTrackNode::PianoTrackNode(const String &name) :
     // this will be set by transport
     //this->layer->setInstrumentId(this->workspace.getDefaultInstrument()->getInstrumentID());
 
-    this->vcsDiffLogic = new VCS::PianoTrackDiffLogic(*this);
+    //this->vcsDiffLogic = new VCS::PianoTrackDiffLogic(*this);
 
-    using namespace Serialization::VCS;
-    this->deltas.add(new VCS::Delta({}, MidiTrackDeltas::trackPath));
-    this->deltas.add(new VCS::Delta({}, MidiTrackDeltas::trackColour));
-    this->deltas.add(new VCS::Delta({}, MidiTrackDeltas::trackInstrument));
-    this->deltas.add(new VCS::Delta({}, PianoSequenceDeltas::notesAdded));
-    this->deltas.add(new VCS::Delta({}, PatternDeltas::clipsAdded));
+    //using namespace Serialization::VCS;
+    //this->deltas.add(new VCS::Delta({}, MidiTrackDeltas::trackPath));
+    //this->deltas.add(new VCS::Delta({}, MidiTrackDeltas::trackColour));
+    //this->deltas.add(new VCS::Delta({}, MidiTrackDeltas::trackInstrument));
+    //this->deltas.add(new VCS::Delta({}, PianoSequenceDeltas::notesAdded));
+    //this->deltas.add(new VCS::Delta({}, PatternDeltas::clipsAdded));
 }
 
 Image PianoTrackNode::getIcon() const noexcept
@@ -54,114 +55,114 @@ Image PianoTrackNode::getIcon() const noexcept
     return Icons::findByName(Icons::pianoTrack, HEADLINE_ICON_SIZE);
 }
 
-int PianoTrackNode::getNumDeltas() const
-{
-    return this->deltas.size();
-}
+//int PianoTrackNode::getNumDeltas() const
+//{
+//    return this->deltas.size();
+//}
 
 //===----------------------------------------------------------------------===//
 // VCS stuff
 //===----------------------------------------------------------------------===//
 
-VCS::Delta *PianoTrackNode::getDelta(int index) const
-{
-    using namespace Serialization::VCS;
-    if (this->deltas[index]->hasType(PianoSequenceDeltas::notesAdded))
-    {
-        const int numEvents = this->getSequence()->size();
-
-        if (numEvents == 0)
-        {
-            this->deltas[index]->setDescription(VCS::DeltaDescription("empty sequence"));
-        }
-        else
-        {
-            this->deltas[index]->setDescription(VCS::DeltaDescription("{x} notes", numEvents));
-        }
-    }
-    else if (this->deltas[index]->hasType(PatternDeltas::clipsAdded))
-    {
-        const int numClips = this->getPattern()->size();
-
-        if (numClips == 0)
-        {
-            this->deltas[index]->setDescription(VCS::DeltaDescription("empty pattern"));
-        }
-        else
-        {
-            this->deltas[index]->setDescription(VCS::DeltaDescription("{x} clips", numClips));
-        }
-    }
-
-    return this->deltas[index];
-}
-
-ValueTree PianoTrackNode::getDeltaData(int deltaIndex) const
-{
-    using namespace Serialization::VCS;
-    if (this->deltas[deltaIndex]->hasType(MidiTrackDeltas::trackPath))
-    {
-        return this->serializePathDelta();
-    }
-    else if (this->deltas[deltaIndex]->hasType(MidiTrackDeltas::trackColour))
-    {
-        return this->serializeColourDelta();
-    }
-    else if (this->deltas[deltaIndex]->hasType(MidiTrackDeltas::trackInstrument))
-    {
-        return this->serializeInstrumentDelta();
-    }
-    else if (this->deltas[deltaIndex]->hasType(PianoSequenceDeltas::notesAdded))
-    {
-        return this->serializeEventsDelta();
-    }
-    else if (this->deltas[deltaIndex]->hasType(PatternDeltas::clipsAdded))
-    {
-        return this->serializeClipsDelta();
-    }
-
-    jassertfalse;
-    return {};
-}
-
-VCS::DiffLogic *PianoTrackNode::getDiffLogic() const
-{
-    return this->vcsDiffLogic;
-}
-
-void PianoTrackNode::resetStateTo(const VCS::TrackedItem &newState)
-{
-    using namespace Serialization::VCS;
-    for (int i = 0; i < newState.getNumDeltas(); ++i)
-    {
-        const VCS::Delta *newDelta = newState.getDelta(i);
-        const auto newDeltaData(newState.getDeltaData(i));
-        
-        if (newDelta->hasType(MidiTrackDeltas::trackPath))
-        {
-            this->resetPathDelta(newDeltaData);
-        }
-        else if (newDelta->hasType(MidiTrackDeltas::trackColour))
-        {
-            this->resetColourDelta(newDeltaData);
-        }
-        else if (newDelta->hasType(MidiTrackDeltas::trackInstrument))
-        {
-            this->resetInstrumentDelta(newDeltaData);
-        }
-        // the current layer state is supposed to have
-        // a single note delta of type PianoSequenceDeltas::notesAdded
-        else if (newDelta->hasType(PianoSequenceDeltas::notesAdded))
-        {
-            this->resetEventsDelta(newDeltaData);
-        }
-        // same rule applies to clips state:
-        else if (newDelta->hasType(PatternDeltas::clipsAdded))
-        {
-            this->resetClipsDelta(newDeltaData);
-        }
-    }
-}
+//VCS::Delta *PianoTrackNode::getDelta(int index) const
+//{
+//    using namespace Serialization::VCS;
+//    if (this->deltas[index]->hasType(PianoSequenceDeltas::notesAdded))
+//    {
+//        const int numEvents = this->getSequence()->size();
+//
+//        if (numEvents == 0)
+//        {
+//            this->deltas[index]->setDescription(VCS::DeltaDescription("empty sequence"));
+//        }
+//        else
+//        {
+//            this->deltas[index]->setDescription(VCS::DeltaDescription("{x} notes", numEvents));
+//        }
+//    }
+//    else if (this->deltas[index]->hasType(PatternDeltas::clipsAdded))
+//    {
+//        const int numClips = this->getPattern()->size();
+//
+//        if (numClips == 0)
+//        {
+//            this->deltas[index]->setDescription(VCS::DeltaDescription("empty pattern"));
+//        }
+//        else
+//        {
+//            this->deltas[index]->setDescription(VCS::DeltaDescription("{x} clips", numClips));
+//        }
+//    }
+//
+//    return this->deltas[index];
+//}
+//
+//ValueTree PianoTrackNode::getDeltaData(int deltaIndex) const
+//{
+//    using namespace Serialization::VCS;
+//    if (this->deltas[deltaIndex]->hasType(MidiTrackDeltas::trackPath))
+//    {
+//        return this->serializePathDelta();
+//    }
+//    else if (this->deltas[deltaIndex]->hasType(MidiTrackDeltas::trackColour))
+//    {
+//        return this->serializeColourDelta();
+//    }
+//    else if (this->deltas[deltaIndex]->hasType(MidiTrackDeltas::trackInstrument))
+//    {
+//        return this->serializeInstrumentDelta();
+//    }
+//    else if (this->deltas[deltaIndex]->hasType(PianoSequenceDeltas::notesAdded))
+//    {
+//        return this->serializeEventsDelta();
+//    }
+//    else if (this->deltas[deltaIndex]->hasType(PatternDeltas::clipsAdded))
+//    {
+//        return this->serializeClipsDelta();
+//    }
+//
+//    jassertfalse;
+//    return {};
+//}
+//
+//VCS::DiffLogic *PianoTrackNode::getDiffLogic() const
+//{
+//    return this->vcsDiffLogic;
+//}
+//
+//void PianoTrackNode::resetStateTo(const VCS::TrackedItem &newState)
+//{
+//    using namespace Serialization::VCS;
+//    for (int i = 0; i < newState.getNumDeltas(); ++i)
+//    {
+//        const VCS::Delta *newDelta = newState.getDelta(i);
+//        const auto newDeltaData(newState.getDeltaData(i));
+//        
+//        if (newDelta->hasType(MidiTrackDeltas::trackPath))
+//        {
+//            this->resetPathDelta(newDeltaData);
+//        }
+//        else if (newDelta->hasType(MidiTrackDeltas::trackColour))
+//        {
+//            this->resetColourDelta(newDeltaData);
+//        }
+//        else if (newDelta->hasType(MidiTrackDeltas::trackInstrument))
+//        {
+//            this->resetInstrumentDelta(newDeltaData);
+//        }
+//        // the current layer state is supposed to have
+//        // a single note delta of type PianoSequenceDeltas::notesAdded
+//        else if (newDelta->hasType(PianoSequenceDeltas::notesAdded))
+//        {
+//            this->resetEventsDelta(newDeltaData);
+//        }
+//        // same rule applies to clips state:
+//        else if (newDelta->hasType(PatternDeltas::clipsAdded))
+//        {
+//            this->resetClipsDelta(newDeltaData);
+//        }
+//    }
+//}
 
 
 //===----------------------------------------------------------------------===//
@@ -172,7 +173,7 @@ ValueTree PianoTrackNode::serialize() const
 {
     ValueTree tree(Serialization::Core::treeNode);
 
-    this->serializeVCSUuid(tree);
+    //this->serializeVCSUuid(tree);
 
     tree.setProperty(Serialization::Core::treeNodeType, this->type, nullptr);
     tree.setProperty(Serialization::Core::treeNodeName, this->name, nullptr);
@@ -191,7 +192,7 @@ void PianoTrackNode::deserialize(const ValueTree &tree)
 {
     this->reset();
 
-    this->deserializeVCSUuid(tree);
+    //this->deserializeVCSUuid(tree);
     this->deserializeTrackProperties(tree);
 
     forEachValueTreeChildWithType(tree, e, Serialization::Midi::track)

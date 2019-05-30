@@ -21,7 +21,7 @@
 #include "Dashboard.h"
 
 class ProjectNode;
-class VersionControlNode;
+//class VersionControlNode;
 class TrackGroupNode;
 class MidiTrackNode;
 class ScriptTreeItem;
@@ -45,7 +45,7 @@ public:
     //===------------------------------------------------------------------===//
 
     ProjectNode *openProject(const File &file);
-    ProjectNode *checkoutProject(const String &id, const String &name);
+    //ProjectNode *checkoutProject(const String &id, const String &name);
 
     ProjectNode *addDefaultProject(const File &projectLocation);
     ProjectNode *addDefaultProject(const String &projectName);

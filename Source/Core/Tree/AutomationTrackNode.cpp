@@ -21,6 +21,7 @@
 #include "TreeNodeSerializer.h"
 #include "Icons.h"
 #include "Pattern.h"
+#include "SerializationKeys.h"
 
 AutomationTrackNode::AutomationTrackNode(const String &name) :
     MidiTrackNode(name, Serialization::Core::automationTrack)
@@ -28,15 +29,15 @@ AutomationTrackNode::AutomationTrackNode(const String &name) :
     this->sequence = new AutomationSequence(*this, *this);
     this->pattern = new Pattern(*this, *this);
 
-    this->vcsDiffLogic = new VCS::AutomationTrackDiffLogic(*this);
+    //this->vcsDiffLogic = new VCS::AutomationTrackDiffLogic(*this);
 
     using namespace Serialization::VCS;
-    this->deltas.add(new VCS::Delta({}, MidiTrackDeltas::trackPath));
-    this->deltas.add(new VCS::Delta({}, MidiTrackDeltas::trackColour));
-    this->deltas.add(new VCS::Delta({}, MidiTrackDeltas::trackInstrument));
-    this->deltas.add(new VCS::Delta({}, MidiTrackDeltas::trackController));
-    this->deltas.add(new VCS::Delta({}, AutoSequenceDeltas::eventsAdded));
-    this->deltas.add(new VCS::Delta({}, PatternDeltas::clipsAdded));
+    //this->deltas.add(new VCS::Delta({}, MidiTrackDeltas::trackPath));
+    //this->deltas.add(new VCS::Delta({}, MidiTrackDeltas::trackColour));
+    //this->deltas.add(new VCS::Delta({}, MidiTrackDeltas::trackInstrument));
+    //this->deltas.add(new VCS::Delta({}, MidiTrackDeltas::trackController));
+    //this->deltas.add(new VCS::Delta({}, AutoSequenceDeltas::eventsAdded));
+    //this->deltas.add(new VCS::Delta({}, PatternDeltas::clipsAdded));
 }
 
 Image AutomationTrackNode::getIcon() const noexcept
@@ -48,115 +49,115 @@ Image AutomationTrackNode::getIcon() const noexcept
 // VCS::TrackedItem
 //===----------------------------------------------------------------------===//
 
-int AutomationTrackNode::getNumDeltas() const
-{
-    return this->deltas.size();
-}
-
-VCS::Delta *AutomationTrackNode::getDelta(int index) const
-{
-    using namespace Serialization::VCS;
-    if (this->deltas[index]->hasType(AutoSequenceDeltas::eventsAdded))
-    {
-        const int numEvents = this->getSequence()->size();
-
-        if (numEvents == 0)
-        {
-            this->deltas[index]->setDescription(VCS::DeltaDescription("empty sequence"));
-        }
-        else
-        {
-            this->deltas[index]->setDescription(VCS::DeltaDescription("{x} events", numEvents));
-        }
-    }
-    else if (this->deltas[index]->hasType(PatternDeltas::clipsAdded))
-    {
-        const int numClips = this->getPattern()->size();
-
-        if (numClips == 0)
-        {
-            this->deltas[index]->setDescription(VCS::DeltaDescription("empty pattern"));
-        }
-        else
-        {
-            this->deltas[index]->setDescription(VCS::DeltaDescription("{x} clips", numClips));
-        }
-    }
-
-    return this->deltas[index];
-}
-
-ValueTree AutomationTrackNode::getDeltaData(int deltaIndex) const
-{
-    using namespace Serialization::VCS;
-    if (this->deltas[deltaIndex]->hasType(MidiTrackDeltas::trackPath))
-    {
-        return this->serializePathDelta();
-    }
-    else if (this->deltas[deltaIndex]->hasType(MidiTrackDeltas::trackColour))
-    {
-        return this->serializeColourDelta();
-    }
-    else if (this->deltas[deltaIndex]->hasType(MidiTrackDeltas::trackInstrument))
-    {
-        return this->serializeInstrumentDelta();
-    }
-    else if (this->deltas[deltaIndex]->hasType(MidiTrackDeltas::trackController))
-    {
-        return this->serializeControllerDelta();
-    }
-    else if (this->deltas[deltaIndex]->hasType(AutoSequenceDeltas::eventsAdded))
-    {
-        return this->serializeEventsDelta();
-    }
-    else if (this->deltas[deltaIndex]->hasType(PatternDeltas::clipsAdded))
-    {
-        return this->serializeClipsDelta();
-    }
-
-    jassertfalse;
-    return {};
-}
-
-VCS::DiffLogic *AutomationTrackNode::getDiffLogic() const
-{
-    return this->vcsDiffLogic;
-}
-
-void AutomationTrackNode::resetStateTo(const VCS::TrackedItem &newState)
-{
-    using namespace Serialization::VCS;
-    for (int i = 0; i < newState.getNumDeltas(); ++i)
-    {
-        const VCS::Delta *newDelta = newState.getDelta(i);
-        const auto newDeltaData(newState.getDeltaData(i));
-        
-        if (newDelta->hasType(MidiTrackDeltas::trackPath))
-        {
-            this->resetPathDelta(newDeltaData);
-        }
-        else if (newDelta->hasType(MidiTrackDeltas::trackColour))
-        {
-            this->resetColourDelta(newDeltaData);
-        }
-        else if (newDelta->hasType(MidiTrackDeltas::trackInstrument))
-        {
-            this->resetInstrumentDelta(newDeltaData);
-        }
-        else if (newDelta->hasType(MidiTrackDeltas::trackController))
-        {
-            this->resetControllerDelta(newDeltaData);
-        }
-        else if (newDelta->hasType(AutoSequenceDeltas::eventsAdded))
-        {
-            this->resetEventsDelta(newDeltaData);
-        }
-        else if (newDelta->hasType(PatternDeltas::clipsAdded))
-        {
-            this->resetClipsDelta(newDeltaData);
-        }
-    }
-}
+//int AutomationTrackNode::getNumDeltas() const
+//{
+//    return this->deltas.size();
+//}
+//
+//VCS::Delta *AutomationTrackNode::getDelta(int index) const
+//{
+//    using namespace Serialization::VCS;
+//    if (this->deltas[index]->hasType(AutoSequenceDeltas::eventsAdded))
+//    {
+//        const int numEvents = this->getSequence()->size();
+//
+//        if (numEvents == 0)
+//        {
+//            this->deltas[index]->setDescription(VCS::DeltaDescription("empty sequence"));
+//        }
+//        else
+//        {
+//            this->deltas[index]->setDescription(VCS::DeltaDescription("{x} events", numEvents));
+//        }
+//    }
+//    else if (this->deltas[index]->hasType(PatternDeltas::clipsAdded))
+//    {
+//        const int numClips = this->getPattern()->size();
+//
+//        if (numClips == 0)
+//        {
+//            this->deltas[index]->setDescription(VCS::DeltaDescription("empty pattern"));
+//        }
+//        else
+//        {
+//            this->deltas[index]->setDescription(VCS::DeltaDescription("{x} clips", numClips));
+//        }
+//    }
+//
+//    return this->deltas[index];
+//}
+//
+//ValueTree AutomationTrackNode::getDeltaData(int deltaIndex) const
+//{
+//    using namespace Serialization::VCS;
+//    if (this->deltas[deltaIndex]->hasType(MidiTrackDeltas::trackPath))
+//    {
+//        return this->serializePathDelta();
+//    }
+//    else if (this->deltas[deltaIndex]->hasType(MidiTrackDeltas::trackColour))
+//    {
+//        return this->serializeColourDelta();
+//    }
+//    else if (this->deltas[deltaIndex]->hasType(MidiTrackDeltas::trackInstrument))
+//    {
+//        return this->serializeInstrumentDelta();
+//    }
+//    else if (this->deltas[deltaIndex]->hasType(MidiTrackDeltas::trackController))
+//    {
+//        return this->serializeControllerDelta();
+//    }
+//    else if (this->deltas[deltaIndex]->hasType(AutoSequenceDeltas::eventsAdded))
+//    {
+//        return this->serializeEventsDelta();
+//    }
+//    else if (this->deltas[deltaIndex]->hasType(PatternDeltas::clipsAdded))
+//    {
+//        return this->serializeClipsDelta();
+//    }
+//
+//    jassertfalse;
+//    return {};
+//}
+//
+//VCS::DiffLogic *AutomationTrackNode::getDiffLogic() const
+//{
+//    return this->vcsDiffLogic;
+//}
+//
+//void AutomationTrackNode::resetStateTo(const VCS::TrackedItem &newState)
+//{
+//    using namespace Serialization::VCS;
+//    for (int i = 0; i < newState.getNumDeltas(); ++i)
+//    {
+//        const VCS::Delta *newDelta = newState.getDelta(i);
+//        const auto newDeltaData(newState.getDeltaData(i));
+//        
+//        if (newDelta->hasType(MidiTrackDeltas::trackPath))
+//        {
+//            this->resetPathDelta(newDeltaData);
+//        }
+//        else if (newDelta->hasType(MidiTrackDeltas::trackColour))
+//        {
+//            this->resetColourDelta(newDeltaData);
+//        }
+//        else if (newDelta->hasType(MidiTrackDeltas::trackInstrument))
+//        {
+//            this->resetInstrumentDelta(newDeltaData);
+//        }
+//        else if (newDelta->hasType(MidiTrackDeltas::trackController))
+//        {
+//            this->resetControllerDelta(newDeltaData);
+//        }
+//        else if (newDelta->hasType(AutoSequenceDeltas::eventsAdded))
+//        {
+//            this->resetEventsDelta(newDeltaData);
+//        }
+//        else if (newDelta->hasType(PatternDeltas::clipsAdded))
+//        {
+//            this->resetClipsDelta(newDeltaData);
+//        }
+//    }
+//}
 
 
 //===----------------------------------------------------------------------===//
@@ -167,7 +168,7 @@ ValueTree AutomationTrackNode::serialize() const
 {
     ValueTree tree(Serialization::Core::treeNode);
 
-    this->serializeVCSUuid(tree);
+    //this->serializeVCSUuid(tree);
 
     tree.setProperty(Serialization::Core::treeNodeType, this->type, nullptr);
     tree.setProperty(Serialization::Core::treeNodeName, this->name, nullptr);
@@ -186,7 +187,7 @@ void AutomationTrackNode::deserialize(const ValueTree &tree)
 {
     this->reset();
 
-    this->deserializeVCSUuid(tree);
+    //this->deserializeVCSUuid(tree);
     this->deserializeTrackProperties(tree);
 
     forEachValueTreeChildWithType(tree, e, Serialization::Midi::automation)

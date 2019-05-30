@@ -18,7 +18,7 @@
 #include "Common.h"
 #include "App.h"
 #include "AudioCore.h"
-#include "Network.h"
+//#include "Network.h"
 
 #include "HelioTheme.h"
 #include "PluginScanner.h"
@@ -212,10 +212,10 @@ class Config &App::Config() noexcept
     return *static_cast<App *>(getInstance())->config;
 }
 
-class Network &App::Network() noexcept
-{
-    return *static_cast<App *>(getInstance())->network;
-}
+//class Network &App::Network() noexcept
+//{
+//    return *static_cast<App *>(getInstance())->network;
+//}
 
 class Clipboard &App::Clipboard() noexcept
 {
@@ -468,7 +468,7 @@ void App::initialise(const String &commandLine)
 
         this->window.reset(new MainWindow(enableOpenGL));
 
-        this->network.reset(new class Network(*this->workspace.get()));
+        //this->network.reset(new class Network(*this->workspace.get()));
 
         // see the comment in changeListenerCallback
         //this->config->getTranslations()->addChangeListener(this);
@@ -496,7 +496,7 @@ void App::shutdown()
 
         this->window = nullptr;
 
-        this->network = nullptr;
+        //this->network = nullptr;
 
         this->workspace->shutdown();
         this->workspace = nullptr;

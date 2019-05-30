@@ -28,13 +28,15 @@ Note::Note(WeakReference<MidiSequence> owner,
     MidiEvent(owner, Type::Note, beatVal),
     key(keyVal),
     length(lengthVal),
-    velocity(velocityVal) {}
+    velocity(velocityVal),
+	lyric("a") {}
 
 Note::Note(WeakReference<MidiSequence> owner, const Note &parametersToCopy) noexcept :
     MidiEvent(owner, parametersToCopy),
     key(parametersToCopy.key),
     length(parametersToCopy.length),
     velocity(parametersToCopy.velocity),
+	lyric(parametersToCopy.lyric),
     tuplet(parametersToCopy.tuplet) {}
 
 void Note::exportMessages(MidiMessageSequence &outSequence, const Clip &clip,
@@ -172,6 +174,13 @@ Note Note::withParameters(const ValueTree &parameters) const noexcept
     return n;
 }
 
+Note Note::withLyric(String lyric) const noexcept
+{
+    Note other(*this);
+    other.lyric = lyric;
+    return other;
+}
+
 //===----------------------------------------------------------------------===//
 // Accessors
 //===----------------------------------------------------------------------===//
@@ -190,7 +199,10 @@ float Note::getVelocity() const noexcept
 {
     return this->velocity;
 }
-
+String Note::getLyric() const noexcept
+{
+    return this->lyric;
+}
 Note::Tuplet Note::getTuplet() const noexcept
 {
     return this->tuplet;
@@ -209,6 +221,7 @@ ValueTree Note::serialize() const noexcept
     tree.setProperty(Midi::timestamp, int(this->beat * TICKS_PER_BEAT), nullptr);
     tree.setProperty(Midi::length, int(this->length * TICKS_PER_BEAT), nullptr);
     tree.setProperty(Midi::volume, int(this->velocity * VELOCITY_SAVE_ACCURACY), nullptr);
+    tree.setProperty(Midi::text, this->lyric, nullptr);
     if (this->tuplet > 1)
     {
         tree.setProperty(Midi::tuplet, this->tuplet, nullptr);
@@ -226,6 +239,7 @@ void Note::deserialize(const ValueTree &tree) noexcept
     this->length = float(tree.getProperty(Midi::length)) / TICKS_PER_BEAT;
     const auto vol = float(tree.getProperty(Midi::volume)) / VELOCITY_SAVE_ACCURACY;
     this->velocity = jmax(jmin(vol, 1.f), 0.f);
+    this->lyric = tree.getProperty(Midi::text);
     this->tuplet = Tuplet(int(tree.getProperty(Midi::tuplet, 1)));
 }
 
@@ -238,6 +252,7 @@ void Note::applyChanges(const Note &other) noexcept
     this->key = other.key;
     this->length = other.length;
     this->velocity = other.velocity;
+    this->lyric = other.lyric;
     this->tuplet = other.tuplet;
 }
 

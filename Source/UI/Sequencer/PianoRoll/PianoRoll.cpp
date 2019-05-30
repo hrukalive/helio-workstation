@@ -27,7 +27,7 @@
 #include "PianoTrackActions.h"
 #include "PianoTrackNode.h"
 #include "AutomationTrackNode.h"
-#include "VersionControlNode.h"
+//#include "VersionControlNode.h"
 #include "ModalDialogInput.h"
 #include "ProjectNode.h"
 #include "ProjectTimeline.h"
@@ -43,9 +43,9 @@
 #include "HelioCallout.h"
 #include "NotesTuningPanel.h"
 #include "RescalePreviewTool.h"
-#include "ChordPreviewTool.h"
+//#include "ChordPreviewTool.h"
 #include "ScalePreviewTool.h"
-#include "ArpPreviewTool.h"
+//#include "ArpPreviewTool.h"
 #include "SequencerOperations.h"
 #include "PatternOperations.h"
 #include "SerializationKeys.h"
@@ -98,8 +98,8 @@ PianoRoll::PianoRoll(ProjectNode &parentProject,
     this->setComponentID(ComponentIDs::pianoRollId);
     this->setRowHeight(PIANOROLL_MIN_ROW_HEIGHT + 5);
 
-    this->helperHorizontal.reset(new HelperRectangleHorizontal());
-    this->addChildComponent(this->helperHorizontal.get());
+    this->draggingHelper.reset(new HelperRectangleHorizontal());
+    this->addChildComponent(this->draggingHelper.get());
 
     this->reloadRollContent();
     this->setBarRange(0, 8);
@@ -449,20 +449,20 @@ int PianoRoll::getYPositionByKey(int targetKey) const
 
 void PianoRoll::showHelpers()
 {
-    if (!this->helperHorizontal->isVisible())
+    if (!this->draggingHelper->isVisible())
     {
         this->selection.needsToCalculateSelectionBounds();
         this->moveHelpers(0.f, 0);
-        this->helperHorizontal->setAlpha(1.f);
-        this->helperHorizontal->setVisible(true);
+        this->draggingHelper->setAlpha(1.f);
+        this->draggingHelper->setVisible(true);
     }
 }
 
 void PianoRoll::hideHelpers()
 {
-    if (this->helperHorizontal->isVisible())
+    if (this->draggingHelper->isVisible())
     {
-        this->fader.fadeOut(this->helperHorizontal.get(), SHORT_FADE_TIME);
+        this->fader.fadeOut(this->draggingHelper.get(), SHORT_FADE_TIME);
     }
 }
 
@@ -478,7 +478,7 @@ void PianoRoll::moveHelpers(const float deltaBeat, const int deltaKey)
 
     const int vX = this->viewport.getViewPositionX();
     const int vW = this->viewport.getViewWidth();
-    this->helperHorizontal->setBounds(selectionTranslated.withLeft(vX).withWidth(vW));
+    this->draggingHelper->setBounds(selectionTranslated.withLeft(vX).withWidth(vW));
 }
 
 //===----------------------------------------------------------------------===//
@@ -547,13 +547,17 @@ void PianoRoll::onAddMidiEvent(const MidiEvent &event)
 
             this->fader.fadeIn(component, 150);
 
+            // TODO check this in a more elegant way
+            // (needed not to break shift+drag note copying)
+            const bool isCurrentlyDraggingNote = this->draggingHelper->isVisible();
+
             const bool isActive = component->belongsTo(this->activeTrack, this->activeClip);
-            component->setActive(isActive);
+            component->setActive(isActive, true);
 
             this->triggerBatchRepaintFor(component);
 
             // arpeggiators preview cannot work without that:
-            if (isActive)
+            if (isActive && !isCurrentlyDraggingNote)
             {
                 this->selection.addToSelection(component);
             }
@@ -1045,14 +1049,14 @@ void PianoRoll::handleCommandMessage(int commandId)
             }
         }
         break;
-    case CommandIDs::ShowArpeggiatorsPanel:
-        if (this->selection.getNumSelected() == 0) { this->selectAll(); }
-        if (auto *panel = ArpPreviewTool::createWithinContext(*this,
-            this->project.getTimeline()->getKeySignatures()))
-        {
-            HelioCallout::emit(panel, this, true);
-        }
-        break;
+    //case CommandIDs::ShowArpeggiatorsPanel:
+    //    if (this->selection.getNumSelected() == 0) { this->selectAll(); }
+    //    if (auto *panel = ArpPreviewTool::createWithinContext(*this,
+    //        this->project.getTimeline()->getKeySignatures()))
+    //    {
+    //        HelioCallout::emit(panel, this, true);
+    //    }
+    //    break;
     case CommandIDs::ShowRescalePanel:
         if (this->selection.getNumSelected() == 0) { this->selectAll(); }
         if (auto *panel = RescalePreviewTool::createWithinContext(*this,
@@ -1633,15 +1637,15 @@ void PianoRoll::showChordTool(ToolType type, Point<int> position)
             App::Layout().addAndMakeVisible(popup);
         }
         break;
-    case PianoRoll::ChordPreview:
-        if (auto *harmonicContext =
-            dynamic_cast<KeySignaturesSequence *>(this->project.getTimeline()->getKeySignatures()->getSequence()))
-        {
-            auto *popup = new ChordPreviewTool(*this, pianoSequence, this->activeClip, harmonicContext);
-            popup->setTopLeftPosition(position - Point<int>(popup->getWidth(), popup->getHeight()) / 2);
-            App::Layout().addAndMakeVisible(popup);
-        }
-        break;
+    //case PianoRoll::ChordPreview:
+    //    if (auto *harmonicContext =
+    //        dynamic_cast<KeySignaturesSequence *>(this->project.getTimeline()->getKeySignatures()->getSequence()))
+    //    {
+    //        auto *popup = new ChordPreviewTool(*this, pianoSequence, this->activeClip, harmonicContext);
+    //        popup->setTopLeftPosition(position - Point<int>(popup->getWidth(), popup->getHeight()) / 2);
+    //        App::Layout().addAndMakeVisible(popup);
+    //    }
+    //    break;
     default:
         break;
     }

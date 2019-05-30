@@ -17,11 +17,11 @@
 
 #include "Common.h"
 #include "UserProfile.h"
-#include "SessionService.h"
+//#include "SessionService.h"
 #include "SerializationKeys.h"
-#include "ProjectSyncService.h"
-#include "ResourceSyncService.h"
-#include "Network.h"
+//#include "ProjectSyncService.h"
+//#include "ResourceSyncService.h"
+//#include "Network.h"
 #include "Config.h"
 
 static UserSessionInfo kSessionsSort;
@@ -83,7 +83,7 @@ void UserProfile::updateProfile(const UserProfileDto &dto)
             DBG("Found new user configuration to be synced: " + r.getType() + "/" + r.getName());
             const auto configToFetch = this->resources[i];
             // should there be a more elegant way to do that?
-            App::Network().getResourceSyncService()->queueFetch(configToFetch);
+            //App::Network().getResourceSyncService()->queueFetch(configToFetch);
         }
     }
 
@@ -243,7 +243,7 @@ void UserProfile::deleteProjectRemotely(const String &id)
         if (project->hasRemoteCopy())
         {
             // sync service will call onProjectRemoteInfoReset(id) when done:
-            App::Network().getProjectSyncService()->deleteProject(id);
+            //App::Network().getProjectSyncService()->deleteProject(id);
         }
     }
 

@@ -56,6 +56,7 @@ public:
     Note withVelocity(float newVelocity) const noexcept;
     Note withTuplet(Tuplet tuplet) const noexcept;
     Note withParameters(const ValueTree &parameters) const noexcept;
+    Note withLyric(String lyric) const noexcept;
 
     //===------------------------------------------------------------------===//
     // Accessors
@@ -64,6 +65,7 @@ public:
     Key getKey() const noexcept;
     float getLength() const noexcept;
     float getVelocity() const noexcept;
+    String getLyric() const noexcept;
     Tuplet getTuplet() const noexcept;
 
     //===------------------------------------------------------------------===//
@@ -98,6 +100,7 @@ protected:
     float length = 1.f;
     float velocity = 1.f;
     Tuplet tuplet = 1;
+    String lyric;
 
 private:
 

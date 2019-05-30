@@ -21,7 +21,7 @@
 //[/Headers]
 
 
-class SeparatorVertical final : public Component
+class SeparatorVertical  : public Component
 {
 public:
 
@@ -43,3 +43,5 @@ private:
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (SeparatorVertical)
 };
+
+
