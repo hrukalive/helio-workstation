@@ -17,16 +17,16 @@
 
 #pragma once
 
-#include "Clip.h"
+//#include "Clip.h"
 #include "Note.h"
 
 class ProjectMapNoteComponent final : public Component
 {
 public:
 
-    ProjectMapNoteComponent(const Note &note, const Clip &clip, const Colour &baseColour) :
+    ProjectMapNoteComponent(const Note &note, const Colour &baseColour) :
         note(note),
-        clip(clip),
+//        clip(clip),
         dx(0.f),
         dw(0.f)
     {
@@ -36,10 +36,10 @@ public:
         this->setPaintingIsUnclipped(true);
     }
 
-    inline int getKey() const noexcept           { return jlimit(0, 128, this->note.getKey() + this->clip.getKey()); }
-    inline float getBeat() const noexcept        { return this->note.getBeat() + this->clip.getBeat(); }
+    inline int getKey() const noexcept           { return jlimit(0, 128, this->note.getKey() + 0); }
+    inline float getBeat() const noexcept        { return this->note.getBeat() + 0; }
     inline float getLength() const noexcept      { return this->note.getLength(); }
-    inline float getVelocity() const noexcept    { return this->note.getVelocity() * this->clip.getVelocity(); }
+    inline float getVelocity() const noexcept    { return this->note.getVelocity() * 1; }
     inline const Note &getNote() const noexcept  { return this->note; }
 
     inline void updateColour(const Colour &base)
@@ -65,7 +65,7 @@ public:
 private:
 
     const Note &note;
-    const Clip &clip;
+//    const Clip &clip;
     
     Colour colour;
 

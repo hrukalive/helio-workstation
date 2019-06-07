@@ -38,7 +38,7 @@ public:
 
     static void parseString(const String &data, int &numerator, int &denominator);
     
-    void exportMessages(MidiMessageSequence &outSequence, const Clip &clip,
+    void exportMessages(MidiMessageSequence &outSequence, 
         double timeOffset, double timeFactor) const noexcept override;
 
     TimeSignatureEvent copyWithNewId() const noexcept;

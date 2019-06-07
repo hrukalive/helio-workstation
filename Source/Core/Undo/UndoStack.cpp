@@ -29,7 +29,7 @@
 #include "AutomationEventActions.h"
 #include "TimeSignatureEventActions.h"
 #include "KeySignatureEventActions.h"
-#include "PatternActions.h"
+//#include "PatternActions.h"
 
 #define MAX_TRANSACTIONS_TO_STORE 10
 
@@ -116,12 +116,12 @@ UndoAction *UndoStack::ActionSet::createUndoActionsByTagName(const Identifier &t
     else if (tagName == Undo::midiTrackRenameAction)                 { return new MidiTrackRenameAction(this->project); }
     else if (tagName == Undo::midiTrackChangeColourAction)           { return new MidiTrackChangeColourAction(this->project); }
     else if (tagName == Undo::midiTrackChangeInstrumentAction)       { return new MidiTrackChangeInstrumentAction(this->project); }
-    else if (tagName == Undo::clipInsertAction)                      { return new ClipInsertAction(this->project); }
-    else if (tagName == Undo::clipRemoveAction)                      { return new ClipRemoveAction(this->project); }
-    else if (tagName == Undo::clipChangeAction)                      { return new ClipChangeAction(this->project); }
-    else if (tagName == Undo::clipsGroupInsertAction)                { return new ClipsGroupInsertAction(this->project); }
-    else if (tagName == Undo::clipsGroupRemoveAction)                { return new ClipsGroupRemoveAction(this->project); }
-    else if (tagName == Undo::clipsGroupChangeAction)                { return new ClipsGroupChangeAction(this->project); }
+//    else if (tagName == Undo::clipInsertAction)                      { return new ClipInsertAction(this->project); }
+//    else if (tagName == Undo::clipRemoveAction)                      { return new ClipRemoveAction(this->project); }
+//    else if (tagName == Undo::clipChangeAction)                      { return new ClipChangeAction(this->project); }
+//    else if (tagName == Undo::clipsGroupInsertAction)                { return new ClipsGroupInsertAction(this->project); }
+//    else if (tagName == Undo::clipsGroupRemoveAction)                { return new ClipsGroupRemoveAction(this->project); }
+//    else if (tagName == Undo::clipsGroupChangeAction)                { return new ClipsGroupChangeAction(this->project); }
     else if (tagName == Undo::noteInsertAction)                      { return new NoteInsertAction(this->project); }
     else if (tagName == Undo::noteRemoveAction)                      { return new NoteRemoveAction(this->project); }
     else if (tagName == Undo::noteChangeAction)                      { return new NoteChangeAction(this->project); }

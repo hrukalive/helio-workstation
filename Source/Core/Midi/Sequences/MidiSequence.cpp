@@ -93,10 +93,10 @@ void MidiSequence::clearUndoHistory()
 // Import/export
 //===----------------------------------------------------------------------===//
 
-void MidiSequence::exportMidi(MidiMessageSequence &outSequence, const Clip &clip,
+void MidiSequence::exportMidi(MidiMessageSequence &outSequence,
     bool soloPlaybackMode, double timeAdjustment, double timeFactor) const
 {
-    if (clip.isMuted())
+    if (this->isMuted())
     {
         return;
     }
@@ -110,7 +110,7 @@ void MidiSequence::exportMidi(MidiMessageSequence &outSequence, const Clip &clip
 
     for (const auto *event : this->midiEvents)
     {
-        event->exportMessages(outSequence, clip, timeAdjustment, timeFactor);
+        event->exportMessages(outSequence, timeAdjustment, timeFactor);
     }
 
     outSequence.updateMatchedPairs();
@@ -154,6 +154,16 @@ float MidiSequence::getLastBeat() const noexcept
     }
     
     return this->midiEvents.getLast()->getBeat();
+}
+
+bool MidiSequence::isMuted() const noexcept
+{
+    return this->mute;
+}
+
+bool MidiSequence::isSoloed() const noexcept
+{
+    return this->solo;
 }
 
 float MidiSequence::getLengthInBeats() const noexcept

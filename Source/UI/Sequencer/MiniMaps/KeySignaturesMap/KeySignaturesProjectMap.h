@@ -57,9 +57,9 @@ public:
     void onRemoveMidiEvent(const MidiEvent &event) override;
 
     // Assuming the timeline has no patterns/clips:
-    void onAddClip(const Clip &clip) override {}
-    void onChangeClip(const Clip &oldClip, const Clip &newClip) override {}
-    void onRemoveClip(const Clip &clip) override {}
+//    void onAddClip(const Clip &clip) override {}
+//    void onChangeClip(const Clip &oldClip, const Clip &newClip) override {}
+//    void onRemoveClip(const Clip &clip) override {}
 
     void onAddTrack(MidiTrack *const track) override;
     void onRemoveTrack(MidiTrack *const track) override;

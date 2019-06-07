@@ -21,7 +21,7 @@
 #include "ProjectNode.h"
 #include "TreeNodeSerializer.h"
 #include "Icons.h"
-#include "Pattern.h"
+//#include "Pattern.h"
 
 #include "MainLayout.h"
 #include "Instrument.h"
@@ -35,7 +35,7 @@ PianoTrackNode::PianoTrackNode(const String &name) :
     MidiTrackNode(name, Serialization::Core::pianoTrack)
 {
     this->sequence = new PianoSequence(*this, *this);
-    this->pattern = new Pattern(*this, *this);
+//    this->pattern = new Pattern(*this, *this);
 
     // this will be set by transport
     //this->layer->setInstrumentId(this->workspace.getDefaultInstrument()->getInstrumentID());
@@ -181,7 +181,7 @@ ValueTree PianoTrackNode::serialize() const
     this->serializeTrackProperties(tree);
 
     tree.appendChild(this->sequence->serialize(), nullptr);
-    tree.appendChild(this->pattern->serialize(), nullptr);
+//    tree.appendChild(this->pattern->serialize(), nullptr);
 
     TreeNodeSerializer::serializeChildren(*this, tree);
 
@@ -200,10 +200,10 @@ void PianoTrackNode::deserialize(const ValueTree &tree)
         this->sequence->deserialize(e);
     }
 
-    forEachValueTreeChildWithType(tree, e, Serialization::Midi::pattern)
-    {
-        this->pattern->deserialize(e);
-    }
+//    forEachValueTreeChildWithType(tree, e, Serialization::Midi::pattern)
+//    {
+//        this->pattern->deserialize(e);
+//    }
 
     // Proceed with basic properties and children
     TreeNode::deserialize(tree);

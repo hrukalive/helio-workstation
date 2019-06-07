@@ -25,7 +25,7 @@
 #include "AudioCore.h"
 #include "Icons.h"
 
-#include "Pattern.h"
+//#include "Pattern.h"
 #include "PianoSequence.h"
 #include "AutomationSequence.h"
 #include "PianoRoll.h"
@@ -209,10 +209,10 @@ MidiSequence *MidiTrackNode::getSequence() const noexcept
     return this->sequence;
 }
 
-Pattern *MidiTrackNode::getPattern() const noexcept
-{
-    return this->pattern;
-}
+//Pattern *MidiTrackNode::getPattern() const noexcept
+//{
+//    return this->pattern;
+//}
 
 //===----------------------------------------------------------------------===//
 // ProjectEventDispatcher
@@ -383,38 +383,38 @@ void MidiTrackNode::dispatchChangeProjectBeatRange()
     }
 }
 
-void MidiTrackNode::dispatchAddClip(const Clip &clip)
-{
-    if (this->lastFoundParent != nullptr)
-    {
-        this->lastFoundParent->broadcastAddClip(clip);
-    }
-}
-
-void MidiTrackNode::dispatchChangeClip(const Clip &oldClip, const Clip &newClip)
-{
-    if (this->lastFoundParent != nullptr)
-    {
-        this->lastFoundParent->broadcastChangeClip(oldClip, newClip);
-    }
-}
-
-void MidiTrackNode::dispatchRemoveClip(const Clip &clip)
-{
-    if (this->lastFoundParent != nullptr)
-    {
-        this->lastFoundParent->broadcastRemoveClip(clip);
-    }
-}
-
-void MidiTrackNode::dispatchPostRemoveClip(Pattern *const pattern)
-{
-    jassert(pattern == this->pattern);
-    if (this->lastFoundParent != nullptr)
-    {
-        this->lastFoundParent->broadcastPostRemoveClip(pattern);
-    }
-}
+//void MidiTrackNode::dispatchAddClip(const Clip &clip)
+//{
+//    if (this->lastFoundParent != nullptr)
+//    {
+//        this->lastFoundParent->broadcastAddClip(clip);
+//    }
+//}
+//
+//void MidiTrackNode::dispatchChangeClip(const Clip &oldClip, const Clip &newClip)
+//{
+//    if (this->lastFoundParent != nullptr)
+//    {
+//        this->lastFoundParent->broadcastChangeClip(oldClip, newClip);
+//    }
+//}
+//
+//void MidiTrackNode::dispatchRemoveClip(const Clip &clip)
+//{
+//    if (this->lastFoundParent != nullptr)
+//    {
+//        this->lastFoundParent->broadcastRemoveClip(clip);
+//    }
+//}
+//
+//void MidiTrackNode::dispatchPostRemoveClip(Pattern *const pattern)
+//{
+//    jassert(pattern == this->pattern);
+//    if (this->lastFoundParent != nullptr)
+//    {
+//        this->lastFoundParent->broadcastPostRemoveClip(pattern);
+//    }
+//}
 
 ProjectNode *MidiTrackNode::getProject() const noexcept
 {

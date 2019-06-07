@@ -37,7 +37,7 @@
 
 #include "AudioCore.h"
 #include "PlayerThread.h"
-#include "Pattern.h"
+//#include "Pattern.h"
 #include "MidiTrack.h"
 #include "MidiEvent.h"
 //#include "TrackedItem.h"
@@ -228,12 +228,12 @@ void ProjectNode::recreatePage()
     this->sequencerLayout->deserialize(layoutState);
 }
 
-void ProjectNode::showPatternEditor(WeakReference<TreeNode> source)
-{
-    jassert(source != nullptr);
-    this->sequencerLayout->showPatternEditor();
-    App::Layout().showPage(this->sequencerLayout, source);
-}
+//void ProjectNode::showPatternEditor(WeakReference<TreeNode> source)
+//{
+//    jassert(source != nullptr);
+//    this->sequencerLayout->showPatternEditor();
+//    App::Layout().showPage(this->sequencerLayout, source);
+//}
 
 void ProjectNode::showLinearEditor(WeakReference<MidiTrack> activeTrack, WeakReference<TreeNode> source)
 {
@@ -254,7 +254,7 @@ WeakReference<TreeNode> ProjectNode::getLastShownTrack() const noexcept
 }
 
 
-void ProjectNode::setEditableScope(MidiTrack *track, const Clip &clip, bool zoomToArea)
+void ProjectNode::setEditableScope(MidiTrack *track, bool zoomToArea)
 {
     if (auto *item = dynamic_cast<PianoTrackNode *>(track))
     {
@@ -263,7 +263,7 @@ void ProjectNode::setEditableScope(MidiTrack *track, const Clip &clip, bool zoom
         item->setSelected();
         // and then we have to update the scope to correct clip,
         // so that roll's scope is updated twice :(
-        this->sequencerLayout->setEditableScope(track, clip, zoomToArea);
+        this->sequencerLayout->setEditableScope(track, zoomToArea);
     }
 }
 
@@ -385,10 +385,10 @@ Point<float> ProjectNode::getProjectRangeInBeats() const
         const auto *track = i.second.get();
         const float sequenceFirstBeat = track->getSequence()->getFirstBeat();
         const float sequenceLastBeat = track->getSequence()->getLastBeat();
-        const float patternFirstBeat = track->getPattern() ? track->getPattern()->getFirstBeat() : 0.f;
-        const float patternLastBeat = track->getPattern() ? track->getPattern()->getLastBeat() : 0.f;
-        firstBeat = jmin(firstBeat, sequenceFirstBeat + patternFirstBeat);
-        lastBeat = jmax(lastBeat, sequenceLastBeat + patternLastBeat);
+//        const float patternFirstBeat = track->getPattern() ? track->getPattern()->getFirstBeat() : 0.f;
+//        const float patternLastBeat = track->getPattern() ? track->getPattern()->getLastBeat() : 0.f;
+        firstBeat = jmin(firstBeat, sequenceFirstBeat + 0);
+        lastBeat = jmax(lastBeat, sequenceLastBeat + 0);
     }
     
     const float defaultNumBeats = DEFAULT_NUM_BARS * BEATS_PER_BAR;
@@ -544,8 +544,8 @@ void ProjectNode::importMidi(const File &file)
         const String trackName = "Track " + String(i);
         MidiTrackNode *track = new PianoTrackNode(trackName);
 
-        const Clip clip(track->getPattern());
-        track->getPattern()->insert(clip, false);
+//        const Clip clip(track->getPattern());
+//        track->getPattern()->insert(clip, false);
 
         this->addChildTreeItem(track, -1, false);
 
@@ -650,29 +650,29 @@ void ProjectNode::broadcastChangeTrackProperties(MidiTrack *const track)
     this->sendChangeMessage();
 }
 
-void ProjectNode::broadcastAddClip(const Clip &clip)
-{
-    this->changeListeners.call(&ProjectListener::onAddClip, clip);
-    this->sendChangeMessage();
-}
+//void ProjectNode::broadcastAddClip(const Clip &clip)
+//{
+//    this->changeListeners.call(&ProjectListener::onAddClip, clip);
+//    this->sendChangeMessage();
+//}
+//
+//void ProjectNode::broadcastChangeClip(const Clip &oldClip, const Clip &newClip)
+//{
+//    this->changeListeners.call(&ProjectListener::onChangeClip, oldClip, newClip);
+//    this->sendChangeMessage();
+//}
+//
+//void ProjectNode::broadcastRemoveClip(const Clip &clip)
+//{
+//    this->changeListeners.call(&ProjectListener::onRemoveClip, clip);
+//    this->sendChangeMessage();
+//}
 
-void ProjectNode::broadcastChangeClip(const Clip &oldClip, const Clip &newClip)
-{
-    this->changeListeners.call(&ProjectListener::onChangeClip, oldClip, newClip);
-    this->sendChangeMessage();
-}
-
-void ProjectNode::broadcastRemoveClip(const Clip &clip)
-{
-    this->changeListeners.call(&ProjectListener::onRemoveClip, clip);
-    this->sendChangeMessage();
-}
-
-void ProjectNode::broadcastPostRemoveClip(Pattern *const pattern)
-{
-    this->changeListeners.call(&ProjectListener::onPostRemoveClip, pattern);
-    this->sendChangeMessage();
-}
+//void ProjectNode::broadcastPostRemoveClip(Pattern *const pattern)
+//{
+//    this->changeListeners.call(&ProjectListener::onPostRemoveClip, pattern);
+//    this->sendChangeMessage();
+//}
 
 void ProjectNode::broadcastChangeProjectInfo(const ProjectInfo *info)
 {
@@ -769,7 +769,7 @@ void ProjectNode::exportMidi(File &file) const
     MidiFile tempFile;
     static const double midiClock = 960.0;
     tempFile.setTicksPerQuarterNote(int(midiClock));
-    static Clip noTransform;
+//    static Clip noTransform;
 
     // Solo flags won't be taken into account
     // in midi export, as I believe they shouldn't:
@@ -779,18 +779,7 @@ void ProjectNode::exportMidi(File &file) const
     for (const auto *track : tracks)
     {
         MidiMessageSequence sequence;
-
-        if (track->getPattern() != nullptr)
-        {
-            for (const auto *clip : track->getPattern()->getClips())
-            {
-                track->getSequence()->exportMidi(sequence, *clip, soloFlag, 0.0, midiClock);
-            }
-        }
-        else
-        {
-            track->getSequence()->exportMidi(sequence, noTransform, soloFlag, 0.0, midiClock);
-        }
+        track->getSequence()->exportMidi(sequence, soloFlag, 0.0, midiClock);
 
         tempFile.addTrack(sequence);
     }
@@ -814,16 +803,16 @@ MidiTrack *ProjectNode::getTrackById(const String &trackId)
     return this->tracksRefsCache[trackId].get();
 }
 
-Pattern *ProjectNode::getPatternByTrackId(const String &trackId)
-{
-    this->rebuildTracksRefsCacheIfNeeded();
-    if (auto track = this->tracksRefsCache[trackId].get())
-    {
-        return track->getPattern();
-    }
-
-    return nullptr;
-}
+//Pattern *ProjectNode::getPatternByTrackId(const String &trackId)
+//{
+//    this->rebuildTracksRefsCacheIfNeeded();
+//    if (auto track = this->tracksRefsCache[trackId].get())
+//    {
+//        return track->getPattern();
+//    }
+//
+//    return nullptr;
+//}
 
 MidiSequence *ProjectNode::getSequenceByTrackId(const String &trackId)
 {

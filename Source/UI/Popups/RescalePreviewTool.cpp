@@ -34,8 +34,8 @@ RescalePreviewTool *RescalePreviewTool::createWithinContext(PianoRoll &roll,
     {
         Note::Key key;
         Scale::Ptr scale = nullptr;
-        const Clip &clip = roll.getLassoSelection().getFirstAs<NoteComponent>()->getClip();
-        if (!SequencerOperations::findHarmonicContext(roll.getLassoSelection(), clip, keySignatures, scale, key))
+//        const Clip &clip = roll.getLassoSelection().getFirstAs<NoteComponent>()->getClip();
+        if (!SequencerOperations::findHarmonicContext(roll.getLassoSelection(), keySignatures, scale, key))
         {
             DBG("Warning: harmonic context could not be detected");
             return new RescalePreviewTool(roll, 0, Scale::getNaturalMajorScale());

@@ -32,7 +32,7 @@ public:
         const String &description = "",
         const Colour &newColour = Colours::white) noexcept;
     
-    void exportMessages(MidiMessageSequence &outSequence, const Clip &clip,
+    void exportMessages(MidiMessageSequence &outSequence, 
         double timeOffset, double timeFactor) const noexcept override;
     
     AnnotationEvent copyWithNewId() const noexcept;

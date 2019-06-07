@@ -27,7 +27,7 @@
 #include "PianoTrackNode.h"
 #include "AutomationTrackNode.h"
 
-#include "Pattern.h"
+//#include "Pattern.h"
 #include "MidiTrack.h"
 #include "PianoSequence.h"
 #include "AutomationSequence.h"
@@ -169,8 +169,8 @@ ProjectNode *RootNode::addDefaultProject(const String &projectName)
 static PianoTrackNode *addPianoTrack(TreeNode *parent, const String &name)
 {
     auto *item = new PianoTrackNode(name);
-    const Clip clip(item->getPattern());
-    item->getPattern()->insert(clip, false);
+//    const Clip clip(item->getPattern());
+//    item->getPattern()->insert(clip, false);
     parent->addChildTreeItem(item);
     return item;
 }
@@ -178,8 +178,8 @@ static PianoTrackNode *addPianoTrack(TreeNode *parent, const String &name)
 static MidiTrackNode *addAutoLayer(TreeNode *parent, const String &name, int controllerNumber)
 {
     auto *item = new AutomationTrackNode(name);
-    const Clip clip(item->getPattern());
-    item->getPattern()->insert(clip, false);
+//    const Clip clip(item->getPattern());
+//    item->getPattern()->insert(clip, false);
     item->setTrackControllerNumber(controllerNumber, false);
     auto *itemLayer = static_cast<AutomationSequence *>(item->getSequence());
     parent->addChildTreeItem(item);

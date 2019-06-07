@@ -27,7 +27,7 @@
 #   define PIANOROLL_MAX_ROW_HEIGHT (35)
 #endif
 
-class MidiSequence;
+//class MidiSequence;
 class NoteComponent;
 class PianoRollCellHighlighter;
 class PianoRollSelectionMenuManager;
@@ -40,7 +40,8 @@ class Scale;
 #include "NoteResizerLeft.h"
 #include "NoteResizerRight.h"
 #include "Note.h"
-#include "Clip.h"
+//#include "Clip.h"
+#include "PianoSequence.h"
 
 class PianoRoll final : public HybridRoll
 {
@@ -50,8 +51,7 @@ public:
               Viewport &viewportRef,
               WeakReference<AudioMonitor> clippingDetector);
     
-    void setEditableScope(WeakReference<MidiTrack> activeTrack,
-        const Clip &activeClip, bool zoomToArea);
+    void setEditableScope(WeakReference<MidiTrack> activeTrack, bool zoomToArea);
 
     WeakReference<MidiTrack> getActiveTrack() const noexcept;
     const Clip &getActiveClip() const noexcept;
@@ -121,9 +121,9 @@ public:
     void onAddMidiEvent(const MidiEvent &event) override;
     void onRemoveMidiEvent(const MidiEvent &event) override;
 
-    void onAddClip(const Clip &clip) override;
-    void onChangeClip(const Clip &oldClip, const Clip &newClip) override;
-    void onRemoveClip(const Clip &clip) override;
+//    void onAddClip(const Clip &clip) override;
+//    void onChangeClip(const Clip &oldClip, const Clip &newClip) override;
+//    void onRemoveClip(const Clip &clip) override;
 
     void onAddTrack(MidiTrack *const track) override;
     void onRemoveTrack(MidiTrack *const track) override;
@@ -182,7 +182,7 @@ private:
     // and there are no multiple instances of the same note within different clips selected.
 
     WeakReference<MidiTrack> activeTrack;
-    Clip activeClip;
+//    PianoSequence activeClip;
 
     void updateActiveRangeIndicator() const;
 
@@ -277,8 +277,9 @@ private:
     UniquePointer<PianoRollSelectionMenuManager> selectedNotesMenuManager;
     
     using SequenceMap = FlatHashMap<Note, UniquePointer<NoteComponent>, MidiEventHash>;
-    using PatternMap = FlatHashMap<Clip, UniquePointer<SequenceMap>, ClipHash>;
-    PatternMap patternMap;
+//    using PatternMap = FlatHashMap<Clip, UniquePointer<SequenceMap>, ClipHash>;
+//    PatternMap patternMap;
+    SequenceMap sequenceMap;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(PianoRoll);
 };

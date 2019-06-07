@@ -18,7 +18,7 @@
 #pragma once
 
 class MidiSequence;
-class Pattern;
+//class Pattern;
 
 // A track is a meta-object that has
 // - all the properties
@@ -61,7 +61,7 @@ public:
     virtual MidiSequence *getSequence() const noexcept = 0;
 
     // This one can return nullptr. E.g. timeline-based tracks still don't have patterns:
-    virtual Pattern *getPattern() const noexcept = 0;
+//    virtual Pattern *getPattern() const noexcept = 0;
 
     //===------------------------------------------------------------------===//
     // Shorthands
@@ -128,7 +128,7 @@ public:
     void setTrackControllerNumber(int val, bool sendNotifications) override {};
 
     MidiSequence *getSequence() const noexcept override { return nullptr; }
-    Pattern *getPattern() const noexcept override { return nullptr; }
+//    Pattern *getPattern() const noexcept override { return nullptr; }
 
     String trackId;
 

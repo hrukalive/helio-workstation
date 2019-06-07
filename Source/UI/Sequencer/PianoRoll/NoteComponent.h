@@ -22,14 +22,13 @@ class MidiTrack;
 
 #include "MidiEventComponent.h"
 #include "Note.h"
-#include "Clip.h"
+//#include "Clip.h"
 
 class NoteComponent final : public MidiEventComponent, Label::Listener
 {
 public:
 
-    NoteComponent(PianoRoll &gridRef, const Note &note,
-        const Clip &clip, bool ghostMode = false) noexcept;
+    NoteComponent(PianoRoll &gridRef, const Note &note, bool ghostMode = false) noexcept;
 
     enum class State : uint8
     {
@@ -51,7 +50,7 @@ public:
     inline float getLength() const noexcept { return this->note.getLength(); }
     inline float getVelocity() const noexcept { return this->note.getVelocity(); }
     inline const Note &getNote() const noexcept { return this->note; }
-    inline const Clip &getClip() const noexcept { return this->clip; }
+//    inline const Clip &getClip() const noexcept { return this->clip; }
 
     PianoRoll &getRoll() const noexcept;
 
@@ -93,7 +92,7 @@ private:
         }
     };
     const Note &note;
-    const Clip &clip;
+//    const Clip &clip;
     EditableLabel label;
 
 private:
@@ -137,7 +136,7 @@ private:
 
 private:
 
-    bool belongsTo(const WeakReference<MidiTrack> &track, const Clip &clip) const noexcept;
+    bool belongsTo(const WeakReference<MidiTrack> &track) const noexcept;
     void switchActiveSegmentToSelected(bool zoomToScope) const;
 
     bool isInitializing() const;

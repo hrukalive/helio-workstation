@@ -17,7 +17,7 @@
 
 #pragma once
 
-#include "Clip.h"
+//#include "Clip.h"
 #include "MidiEvent.h"
 #include "ProjectEventDispatcher.h"
 
@@ -48,7 +48,7 @@ public:
 
     static float midiTicksToBeats(double ticks, int timeFormat) noexcept;
     virtual void importMidi(const MidiMessageSequence &sequence, short timeFormat) = 0;
-    virtual void exportMidi(MidiMessageSequence &outSequence, const Clip &clip,
+    virtual void exportMidi(MidiMessageSequence &outSequence, 
         bool soloPlaybackMode, double timeAdjustment, double timeFactor) const;
 
     //===------------------------------------------------------------------===//
@@ -100,6 +100,8 @@ public:
 
     virtual float getFirstBeat() const noexcept;
     virtual float getLastBeat() const noexcept;
+    bool isMuted() const noexcept;
+    bool isSoloed() const noexcept;
     float getLengthInBeats() const noexcept;
     MidiTrack *getTrack() const noexcept;
 
@@ -150,6 +152,9 @@ protected:
 
     float lastEndBeat;
     float lastStartBeat;
+    
+    bool mute = false;
+    bool solo = false;
 
     ProjectEventDispatcher &eventDispatcher;
     ProjectNode *getProject() const noexcept;

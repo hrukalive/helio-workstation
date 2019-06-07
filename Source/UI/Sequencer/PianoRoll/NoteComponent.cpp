@@ -37,10 +37,10 @@ static PianoSequence *getPianoSequence(const Lasso &selection)
     return static_cast<PianoSequence *>(firstEvent.getSequence());
 }
 
-NoteComponent::NoteComponent(PianoRoll &editor, const Note &event, const Clip &clip, bool ghostMode) noexcept :
+NoteComponent::NoteComponent(PianoRoll &editor, const Note &event, bool ghostMode) noexcept :
     MidiEventComponent(editor, ghostMode),
     note(event),
-    clip(clip),
+//    clip(clip),
     state(State::None),
     firstChangeDone(false)
 {
@@ -650,7 +650,7 @@ void NoteComponent::paint(Graphics &g) noexcept
     const float sx = x1 + 2.f;
     const float sy = float(this->getHeight() - 4);
     const float sw1 = jmax(0.f, (w - 4.f)) * this->note.getVelocity();
-    const float sw2 = jmax(0.f, (w - 4.f)) * this->note.getVelocity() * this->clip.getVelocity();
+    const float sw2 = jmax(0.f, (w - 4.f)) * this->note.getVelocity() * 1;
     g.setColour(this->colourVolume);
     g.fillRect(sx, sy, sw1, 3.f);
     g.fillRect(sx, sy, sw2, 3.f);
@@ -679,15 +679,15 @@ void NoteComponent::resized()
 // Helpers
 //===----------------------------------------------------------------------===//
 
-bool NoteComponent::belongsTo(const WeakReference<MidiTrack> &track, const Clip &clip) const noexcept
+bool NoteComponent::belongsTo(const WeakReference<MidiTrack> &track) const noexcept
 {
-    return this->clip == clip && this->note.getSequence()->getTrack() == track;
+    return this->note.getSequence()->getTrack() == track;
 }
 
 void NoteComponent::switchActiveSegmentToSelected(bool zoomToScope) const
 {
     auto *track = this->getNote().getSequence()->getTrack();
-    this->roll.getProject().setEditableScope(track, this->getClip(), zoomToScope);
+    this->roll.getProject().setEditableScope(track, zoomToScope);
     if (zoomToScope)
     {
         this->getRoll().zoomOutImpulse(0.5f);
@@ -1075,5 +1075,5 @@ void NoteComponent::sendNoteOn(int noteKey, float velocity) const
 {
     const auto &trackId = this->getNote().getSequence()->getTrackId();
     this->getRoll().getTransport().previewMidiMessage(trackId,
-        MidiMessage::noteOn(1, noteKey + this->clip.getKey(), velocity * this->clip.getVelocity()));
+        MidiMessage::noteOn(1, noteKey + 0, velocity * 1));
 }

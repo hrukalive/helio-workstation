@@ -21,7 +21,7 @@
 #include "Icons.h"
 #include "Lasso.h"
 #include "PianoRollSelectionMenu.h"
-#include "PatternRollSelectionMenu.h"
+//#include "PatternRollSelectionMenu.h"
 #include "ProjectNode.h"
 #include "ProjectTimeline.h"
 
@@ -117,41 +117,41 @@ PianoRollSelectionMenuManager::PianoRollSelectionMenuManager(WeakReference<Lasso
 // PatternRoll selection menu
 //===----------------------------------------------------------------------===//
 
-class PatternRollMenuSource final : public HeadlineItemDataSource
-{
-public:
-
-    PatternRollMenuSource(WeakReference<Lasso> lasso) : lasso(lasso) {}
-
-    bool hasMenu() const noexcept override { return true; }
-
-    ScopedPointer<Component> createMenu() override
-    {
-        return { new PatternRollSelectionMenu(this->lasso) };
-    }
-
-    Image getIcon() const override
-    {
-        return Icons::findByName(Icons::selection, HEADLINE_ICON_SIZE);
-    }
-
-    String getName() const override
-    {
-        return TRANS("menu::selection::notes");
-    }
-
-    bool canBeSelectedAsMenuItem() const override { return false; }
-    void onSelectedAsMenuItem() override {}
-
-private:
-
-    WeakReference<Lasso> lasso;
-
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(PatternRollMenuSource);
-};
-
-PatternRollSelectionMenuManager::PatternRollSelectionMenuManager(WeakReference<Lasso> lasso) :
-    SelectionMenuManager(lasso, 1)
-{
-    this->menu = new PatternRollMenuSource(lasso);
-}
+//class PatternRollMenuSource final : public HeadlineItemDataSource
+//{
+//public:
+//
+//    PatternRollMenuSource(WeakReference<Lasso> lasso) : lasso(lasso) {}
+//
+//    bool hasMenu() const noexcept override { return true; }
+//
+//    ScopedPointer<Component> createMenu() override
+//    {
+//        return { new PatternRollSelectionMenu(this->lasso) };
+//    }
+//
+//    Image getIcon() const override
+//    {
+//        return Icons::findByName(Icons::selection, HEADLINE_ICON_SIZE);
+//    }
+//
+//    String getName() const override
+//    {
+//        return TRANS("menu::selection::notes");
+//    }
+//
+//    bool canBeSelectedAsMenuItem() const override { return false; }
+//    void onSelectedAsMenuItem() override {}
+//
+//private:
+//
+//    WeakReference<Lasso> lasso;
+//
+//    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(PatternRollMenuSource);
+//};
+//
+//PatternRollSelectionMenuManager::PatternRollSelectionMenuManager(WeakReference<Lasso> lasso) :
+//    SelectionMenuManager(lasso, 1)
+//{
+//    this->menu = new PatternRollMenuSource(lasso);
+//}

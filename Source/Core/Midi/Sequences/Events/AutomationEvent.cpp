@@ -86,7 +86,7 @@ float AutomationEvent::interpolateEvents(float cv1, float cv2, float factor, flo
 }
 
 void AutomationEvent::exportMessages(MidiMessageSequence &outSequence,
-    const Clip &clip, double timeOffset, double timeFactor) const noexcept
+    double timeOffset, double timeFactor) const noexcept
 {
     MidiMessage cc;
     const bool isTempoTrack = this->getSequence()->getTrack()->isTempoTrack();
@@ -101,7 +101,7 @@ void AutomationEvent::exportMessages(MidiMessageSequence &outSequence,
             this->getTrackControllerNumber(), int(this->controllerValue * 127));
     }
 
-    const double startTime = (this->beat + clip.getBeat()) * timeFactor;
+    const double startTime = (this->beat + 0) * timeFactor;
     cc.setTimeStamp(startTime);
     outSequence.addEvent(cc, timeOffset);
 
@@ -125,7 +125,7 @@ void AutomationEvent::exportMessages(MidiMessageSequence &outSequence,
             const float controllerDelta = fabs(interpolatedValue - lastAppliedValue);
             if (controllerDelta > CURVE_INTERPOLATION_THRESHOLD)
             {
-                const double interpolatedTs = (interpolatedBeat + clip.getBeat()) * timeFactor;
+                const double interpolatedTs = (interpolatedBeat + 0) * timeFactor;
                 if (isTempoTrack)
                 {
                     MidiMessage ci(MidiMessage::tempoMetaEvent(Transport::getTempoByCV(interpolatedValue)));

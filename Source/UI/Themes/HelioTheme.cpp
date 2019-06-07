@@ -28,7 +28,7 @@
 #include "InstrumentEditor.h"
 #include "HelperRectangle.h"
 #include "PianoRoll.h"
-#include "PatternRoll.h"
+//#include "PatternRoll.h"
 
 #include "SelectionComponent.h"
 #include "PanelBackgroundA.h"

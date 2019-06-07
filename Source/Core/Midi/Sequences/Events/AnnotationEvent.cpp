@@ -43,10 +43,10 @@ AnnotationEvent::AnnotationEvent(WeakReference<MidiSequence> owner,
     colour(parametersToCopy.colour) {}
 
 void AnnotationEvent::exportMessages(MidiMessageSequence &outSequence,
-    const Clip &clip, double timeOffset, double timeFactor) const noexcept
+    double timeOffset, double timeFactor) const noexcept
 {
     MidiMessage event(MidiMessage::textMetaEvent(1, this->getDescription()));
-    event.setTimeStamp((this->beat + clip.getBeat()) * timeFactor);
+    event.setTimeStamp((this->beat + 0) * timeFactor);
     outSequence.addEvent(event, timeOffset);
 }
 

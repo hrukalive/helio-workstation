@@ -36,7 +36,7 @@
 #include "MidiTrackActions.h"
 #include "PianoTrackActions.h"
 #include "AutomationTrackActions.h"
-#include "Pattern.h"
+//#include "Pattern.h"
 #include "UndoStack.h"
 #include "Workspace.h"
 #include "CommandIDs.h"
@@ -94,7 +94,7 @@ void ProjectMenu::handleCommandMessage(int commandId)
             {
                 if (dynamic_cast<PianoSequence *>(tracks.getUnchecked(i)->getSequence()))
                 {
-                    tracks.getUnchecked(i)->getPattern()->transposeAll(1, false);
+//                    tracks.getUnchecked(i)->getPattern()->transposeAll(1, false);
                 }
             }
         }
@@ -108,7 +108,7 @@ void ProjectMenu::handleCommandMessage(int commandId)
             {
                 if (dynamic_cast<PianoSequence *>(tracks.getUnchecked(i)->getSequence()))
                 {
-                    tracks.getUnchecked(i)->getPattern()->transposeAll(-1, false);
+//                    tracks.getUnchecked(i)->getPattern()->transposeAll(-1, false);
                 }
             }
         }
@@ -152,8 +152,8 @@ ValueTree ProjectMenu::createPianoTrackTempate(const String &name, const String 
     ScopedPointer<MidiTrackNode> newItem(new PianoTrackNode(name));
     
     // We need to have at least one clip on a pattern:
-    const Clip clip(newItem->getPattern());
-    newItem->getPattern()->insert(clip, false);
+//    const Clip clip(newItem->getPattern());
+//    newItem->getPattern()->insert(clip, false);
 
     Random r;
     const auto colours = MenuPanel::getColoursList().getAllValues();
@@ -172,8 +172,8 @@ ValueTree ProjectMenu::createAutoTrackTempate(const String &name,
     ScopedPointer<MidiTrackNode> newItem(new AutomationTrackNode(name));
 
     // We need to have at least one clip on a pattern:
-    const Clip clip(newItem->getPattern());
-    newItem->getPattern()->insert(clip, false);
+//    const Clip clip(newItem->getPattern());
+//    newItem->getPattern()->insert(clip, false);
 
     auto itemLayer = static_cast<AutomationSequence *>(newItem->getSequence());
     

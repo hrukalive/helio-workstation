@@ -20,8 +20,8 @@
 class MidiTrack;
 class MidiEvent;
 class MidiSequence;
-class Pattern;
-class Clip;
+//class Pattern;
+//class Clip;
 class ProjectInfo;
 
 class ProjectListener
@@ -36,10 +36,10 @@ public:
     virtual void onRemoveMidiEvent(const MidiEvent &event) = 0;
     virtual void onPostRemoveMidiEvent(MidiSequence *const layer) {}
 
-    virtual void onAddClip(const Clip &clip) = 0;
-    virtual void onChangeClip(const Clip &oldClip, const Clip &newClip) = 0;
-    virtual void onRemoveClip(const Clip &clip) = 0;
-    virtual void onPostRemoveClip(Pattern *const pattern) {}
+//    virtual void onAddClip(const Clip &clip) = 0;
+//    virtual void onChangeClip(const Clip &oldClip, const Clip &newClip) = 0;
+//    virtual void onRemoveClip(const Clip &clip) = 0;
+//    virtual void onPostRemoveClip(Pattern *const pattern) {}
 
     virtual void onAddTrack(MidiTrack *const track) = 0;
     virtual void onRemoveTrack(MidiTrack *const track) = 0;

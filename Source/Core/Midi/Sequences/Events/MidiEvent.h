@@ -17,7 +17,7 @@
 
 #pragma once
 
-class Clip;
+//class Clip;
 class MidiSequence;
 
 class MidiEvent : public Serializable
@@ -53,7 +53,7 @@ public:
     MidiEvent(WeakReference<MidiSequence> owner, const MidiEvent &parameters) noexcept;
 
     virtual void exportMessages(MidiMessageSequence &outSequence,
-        const Clip &clip, double timeOffset, double timeFactor) const noexcept = 0;
+        double timeOffset, double timeFactor) const noexcept = 0;
 
     //===------------------------------------------------------------------===//
     // Accessors

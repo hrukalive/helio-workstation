@@ -23,8 +23,8 @@
 #include "MidiSequence.h"
 #include "MidiEvent.h"
 #include "MidiTrack.h"
-#include "Clip.h"
-#include "Pattern.h"
+//#include "Clip.h"
+//#include "Pattern.h"
 #include "Workspace.h"
 #include "AudioCore.h"
 #include "HybridRoll.h"
@@ -476,27 +476,27 @@ void Transport::onPostRemoveMidiEvent(MidiSequence *const sequence)
     this->sequencesAreOutdated = true;
 }
 
-void Transport::onAddClip(const Clip &clip)
-{
-    this->stopPlayback();
-    updateLengthAndTimeIfNeeded((&clip));
-    this->sequencesAreOutdated = true;
-}
+//void Transport::onAddClip(const Clip &clip)
+//{
+//    this->stopPlayback();
+//    updateLengthAndTimeIfNeeded((&clip));
+//    this->sequencesAreOutdated = true;
+//}
 
-void Transport::onChangeClip(const Clip &oldClip, const Clip &newClip)
-{
-    this->stopPlayback();
-    updateLengthAndTimeIfNeeded((&newClip));
-    this->sequencesAreOutdated = true;
-}
-
-void Transport::onRemoveClip(const Clip &clip) {}
-void Transport::onPostRemoveClip(Pattern *const pattern)
-{
-    this->stopPlayback();
-    updateLengthAndTimeIfNeeded(pattern->getTrack());
-    this->sequencesAreOutdated = true;
-}
+//void Transport::onChangeClip(const Clip &oldClip, const Clip &newClip)
+//{
+//    this->stopPlayback();
+//    updateLengthAndTimeIfNeeded((&newClip));
+//    this->sequencesAreOutdated = true;
+//}
+//
+//void Transport::onRemoveClip(const Clip &clip) {}
+//void Transport::onPostRemoveClip(Pattern *const pattern)
+//{
+//    this->stopPlayback();
+//    updateLengthAndTimeIfNeeded(pattern->getTrack());
+//    this->sequencesAreOutdated = true;
+//}
 
 void Transport::onChangeTrackProperties(MidiTrack *const track)
 {
@@ -651,15 +651,15 @@ void Transport::recacheIfNeeded()
     if (this->sequencesAreOutdated)
     {
         this->playbackCache.clear();
-        static Clip noTransform;
+//        static Clip noTransform;
         const double offset = -this->trackStartMs.get();
 
         // Find solo clips, if any
         bool hasSoloClips = false;
         for (const auto *track : this->tracksCache)
         {
-            if (track->getPattern() != nullptr &&
-                track->getPattern()->hasSoloClips())
+            if (track->getSequence() != nullptr &&
+                track->getSequence()->isSoloed())
             {
                 hasSoloClips = true;
                 break;
@@ -671,17 +671,7 @@ void Transport::recacheIfNeeded()
             const auto instrument = this->linksCache[track->getTrackId()];
             auto cached = CachedMidiSequence::createFrom(instrument, track->getSequence());
 
-            if (track->getPattern() != nullptr)
-            {
-                for (const auto *clip : track->getPattern()->getClips())
-                {
-                    cached->track->exportMidi(cached->midiMessages, *clip, hasSoloClips, offset, 1.0);
-                }
-            }
-            else
-            {
-                cached->track->exportMidi(cached->midiMessages, noTransform, hasSoloClips, offset, 1.0);
-            }
+            cached->track->exportMidi(cached->midiMessages, hasSoloClips, offset, 1.0);
 
             this->playbackCache.addWrapper(cached);
         }

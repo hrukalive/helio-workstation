@@ -20,14 +20,14 @@
 #include "AutomationSequence.h"
 #include "TreeNodeSerializer.h"
 #include "Icons.h"
-#include "Pattern.h"
+//#include "Pattern.h"
 #include "SerializationKeys.h"
 
 AutomationTrackNode::AutomationTrackNode(const String &name) :
     MidiTrackNode(name, Serialization::Core::automationTrack)
 {
     this->sequence = new AutomationSequence(*this, *this);
-    this->pattern = new Pattern(*this, *this);
+//    this->pattern = new Pattern(*this, *this);
 
     //this->vcsDiffLogic = new VCS::AutomationTrackDiffLogic(*this);
 
@@ -176,7 +176,7 @@ ValueTree AutomationTrackNode::serialize() const
     this->serializeTrackProperties(tree);
 
     tree.appendChild(this->sequence->serialize(), nullptr);
-    tree.appendChild(this->pattern->serialize(), nullptr);
+//    tree.appendChild(this->pattern->serialize(), nullptr);
 
     TreeNodeSerializer::serializeChildren(*this, tree);
 
@@ -195,10 +195,10 @@ void AutomationTrackNode::deserialize(const ValueTree &tree)
         this->sequence->deserialize(e);
     }
 
-    forEachValueTreeChildWithType(tree, e, Serialization::Midi::pattern)
-    {
-        this->pattern->deserialize(e);
-    }
+//    forEachValueTreeChildWithType(tree, e, Serialization::Midi::pattern)
+//    {
+//        this->pattern->deserialize(e);
+//    }
 
     // Proceed with basic properties and children
     TreeNode::deserialize(tree);

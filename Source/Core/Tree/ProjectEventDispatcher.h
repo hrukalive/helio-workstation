@@ -18,7 +18,7 @@
 #pragma once
 
 class Clip;
-class Pattern;
+//class Pattern;
 class MidiTrack;
 class MidiEvent;
 class MidiSequence;
@@ -39,10 +39,10 @@ public:
     virtual void dispatchPostRemoveEvent(MidiSequence *const sequence) = 0;
 
     // Patterns and clips
-    virtual void dispatchAddClip(const Clip &clip) = 0;
-    virtual void dispatchChangeClip(const Clip &oldClip, const Clip &newClip) = 0;
-    virtual void dispatchRemoveClip(const Clip &clip) = 0;
-    virtual void dispatchPostRemoveClip(Pattern *const pattern) = 0;
+//    virtual void dispatchAddClip(const Clip &clip) = 0;
+//    virtual void dispatchChangeClip(const Clip &oldClip, const Clip &newClip) = 0;
+//    virtual void dispatchRemoveClip(const Clip &clip) = 0;
+//    virtual void dispatchPostRemoveClip(Pattern *const pattern) = 0;
 
     // Sent on lightweight changes like mute/unmute, instrument change
     virtual void dispatchChangeTrackProperties() = 0;
@@ -61,10 +61,10 @@ public:
     void dispatchRemoveEvent(const MidiEvent &event) noexcept override {}
     void dispatchPostRemoveEvent(MidiSequence *const layer) noexcept override {}
 
-    void dispatchAddClip(const Clip &clip) noexcept override {}
-    void dispatchChangeClip(const Clip &oldClip, const Clip &newClip) noexcept override {}
-    void dispatchRemoveClip(const Clip &clip) noexcept override {}
-    void dispatchPostRemoveClip(Pattern *const pattern) noexcept override {}
+//    void dispatchAddClip(const Clip &clip) noexcept override {}
+//    void dispatchChangeClip(const Clip &oldClip, const Clip &newClip) noexcept override {}
+//    void dispatchRemoveClip(const Clip &clip) noexcept override {}
+//    void dispatchPostRemoveClip(Pattern *const pattern) noexcept override {}
 
     void dispatchChangeTrackProperties() noexcept override {}
     void dispatchChangeProjectBeatRange() noexcept override {}

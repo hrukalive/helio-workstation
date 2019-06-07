@@ -31,9 +31,9 @@ class Transport;
 class ProjectInfo;
 class ProjectTimeline;
 class UndoStack;
-class Pattern;
+//class Pattern;
 class MidiTrack;
-class Clip;
+//class Clip;
 
 #include "TreeNode.h"
 #include "DocumentOwner.h"
@@ -77,11 +77,11 @@ public:
 
     void safeRename(const String &newName, bool sendNotifications) override;
 
-    void showPatternEditor(WeakReference<TreeNode> source);
+//    void showPatternEditor(WeakReference<TreeNode> source);
     void showLinearEditor(WeakReference<MidiTrack> activeTrack, WeakReference<TreeNode> source);
     WeakReference<TreeNode> getLastShownTrack() const noexcept;
 
-    void setEditableScope(MidiTrack *track, const Clip &clip, bool zoomToArea = false);
+    void setEditableScope(MidiTrack *track, bool zoomToArea = false);
 
     //===------------------------------------------------------------------===//
     // Menu
@@ -139,10 +139,10 @@ public:
     void broadcastRemoveTrack(MidiTrack *const track);
     void broadcastChangeTrackProperties(MidiTrack *const track);
 
-    void broadcastAddClip(const Clip &clip);
-    void broadcastChangeClip(const Clip &oldClip, const Clip &newClip);
-    void broadcastRemoveClip(const Clip &clip);
-    void broadcastPostRemoveClip(Pattern *const pattern);
+//    void broadcastAddClip(const Clip &clip);
+//    void broadcastChangeClip(const Clip &oldClip, const Clip &newClip);
+//    void broadcastRemoveClip(const Clip &clip);
+//    void broadcastPostRemoveClip(Pattern *const pattern);
 
     void broadcastChangeProjectInfo(const ProjectInfo *info);
     void broadcastChangeViewBeatRange(float firstBeat, float lastBeat);
@@ -185,7 +185,7 @@ protected:
     //===------------------------------------------------------------------===//
 
     MidiTrack *getTrackById(const String &trackId) override;
-    Pattern *getPatternByTrackId(const String &trackId) override;
+//    Pattern *getPatternByTrackId(const String &trackId) override;
     MidiSequence *getSequenceByTrackId(const String &trackId) override;
 
 private:

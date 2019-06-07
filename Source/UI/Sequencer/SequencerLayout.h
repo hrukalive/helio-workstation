@@ -18,7 +18,7 @@
 #pragma once
 
 class PianoRoll;
-class PatternRoll;
+//class PatternRoll;
 class HybridRoll;
 class RollsSwitchingProxy;
 class MidiTrack;
@@ -43,10 +43,9 @@ public:
     explicit SequencerLayout(ProjectNode &parentProject);
     ~SequencerLayout() override;
 
-    void showPatternEditor();
+//    void showPatternEditor();
     void showLinearEditor(WeakReference<MidiTrack> activeTrack);
-    void setEditableScope(WeakReference<MidiTrack> activeTrack,
-        const Clip &clip, bool zoomToArea);
+    void setEditableScope(WeakReference<MidiTrack> activeTrack, bool zoomToArea);
     
     HybridRoll *getRoll() const;
 
@@ -82,11 +81,11 @@ private:
     ProjectNode &project;
     
     ScopedPointer<Viewport> pianoViewport;
-    ScopedPointer<Viewport> patternViewport;
+//    ScopedPointer<Viewport> patternViewport;
     ScopedPointer<TrackScroller> scroller;
 
     ScopedPointer<PianoRoll> pianoRoll;
-    ScopedPointer<PatternRoll> patternRoll;
+//    ScopedPointer<PatternRoll> patternRoll;
     ScopedPointer<RollsSwitchingProxy> rollContainer;
 
     ScopedPointer<SequencerSidebarLeft> rollNavSidebar;

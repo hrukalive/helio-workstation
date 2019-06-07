@@ -63,10 +63,10 @@ void TimeSignatureEvent::parseString(const String &data, int &numerator, int &de
 }
 
 void TimeSignatureEvent::exportMessages(MidiMessageSequence &outSequence,
-    const Clip &clip, double timeOffset, double timeFactor) const noexcept
+    double timeOffset, double timeFactor) const noexcept
 {
     MidiMessage event(MidiMessage::timeSignatureMetaEvent(this->numerator, this->denominator));
-    event.setTimeStamp((this->beat + clip.getBeat()) * timeFactor);
+    event.setTimeStamp((this->beat + 0) * timeFactor);
     outSequence.addEvent(event, timeOffset);
 }
 

@@ -17,7 +17,7 @@
 
 #pragma once
 
-class Pattern;
+//class Pattern;
 class MidiTrack;
 class MidiSequence;
 
@@ -27,10 +27,10 @@ public:
 
     virtual ~MidiTrackSource() {}
 
-    inline Pattern *findPatternByTrackId(const String &trackId)
-    {
-        return this->getPatternByTrackId(trackId);
-    }
+//    inline Pattern *findPatternByTrackId(const String &trackId)
+//    {
+//        return this->getPatternByTrackId(trackId);
+//    }
 
     template<typename T>
     T *findSequenceByTrackId(const String &trackId)
@@ -47,7 +47,7 @@ public:
 protected:
 
     virtual MidiTrack *getTrackById(const String &trackId) = 0;
-    virtual Pattern *getPatternByTrackId(const String &trackId) = 0;
+//    virtual Pattern *getPatternByTrackId(const String &trackId) = 0;
     virtual MidiSequence *getSequenceByTrackId(const String &trackId) = 0;
 
 };
@@ -57,7 +57,7 @@ class EmptyMidiTrackSource : public MidiTrackSource
 protected:
 
     MidiTrack *getTrackById(const String &trackId) override { return nullptr; };
-    Pattern *getPatternByTrackId(const String &trackId) override { return nullptr; };
+//    Pattern *getPatternByTrackId(const String &trackId) override { return nullptr; };
     MidiSequence *getSequenceByTrackId(const String &trackId) override { return nullptr; };
 
 };

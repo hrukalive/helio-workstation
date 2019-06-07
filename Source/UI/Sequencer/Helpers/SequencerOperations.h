@@ -22,7 +22,7 @@ class ProjectNode;
 class MidiSequence;
 class MidiTrackNode;
 class MidiTrack;
-class Pattern;
+//class Pattern;
 class Clipboard;
 class PianoSequence;
 
@@ -92,7 +92,7 @@ struct SequencerOperations final
 
     static void rescale(Lasso &selection, Scale::Ptr scaleA, Scale::Ptr scaleB, bool shouldCheckpoint = true);
 
-    static bool findHarmonicContext(const Lasso &selection, const Clip &clip,
+    static bool findHarmonicContext(const Lasso &selection, 
         WeakReference<MidiTrack> keySignatures, Scale::Ptr &outScale, Note::Key &outRootKey);
 
     static Array<Note> cutEvents(const Array<Note> &notes,
@@ -100,6 +100,6 @@ struct SequencerOperations final
 
     // Creates new tracks from events of existing tracks
     static ScopedPointer<MidiTrackNode> createPianoTrack(const Lasso &selection);
-    static ScopedPointer<MidiTrackNode> createPianoTrack(const Array<Note> &events, const Pattern *pattern);
-    static ScopedPointer<MidiTrackNode> createAutomationTrack(const Array<AutomationEvent> &events, const Pattern *pattern);
+    static ScopedPointer<MidiTrackNode> createPianoTrack(const Array<Note> &events);
+    static ScopedPointer<MidiTrackNode> createAutomationTrack(const Array<AutomationEvent> &events);
 };

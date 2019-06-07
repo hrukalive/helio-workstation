@@ -39,11 +39,11 @@ Note::Note(WeakReference<MidiSequence> owner, const Note &parametersToCopy) noex
 	lyric(parametersToCopy.lyric),
     tuplet(parametersToCopy.tuplet) {}
 
-void Note::exportMessages(MidiMessageSequence &outSequence, const Clip &clip,
+void Note::exportMessages(MidiMessageSequence &outSequence,
     double timeOffset, double timeFactor) const noexcept
 {
-    const auto finalKey = this->key + clip.getKey();
-    const auto finalVolume = this->velocity * clip.getVelocity();
+    const auto finalKey = this->key + 0;
+    const auto finalVolume = this->velocity * 1;
     const auto tupletLength = this->length / float(this->tuplet);
 
     for (int i = 0; i < this->tuplet; ++i)
@@ -57,7 +57,7 @@ void Note::exportMessages(MidiMessageSequence &outSequence, const Clip &clip,
         const float tupletVolume = finalVolume * (1.f - float(i) / 100.f);
 
         MidiMessage eventNoteOn(MidiMessage::noteOn(this->getTrackChannel(), finalKey, tupletVolume));
-        const double startTime = (tupletStart + clip.getBeat()) * timeFactor;
+        const double startTime = (tupletStart + 0) * timeFactor;
         eventNoteOn.setTimeStamp(startTime);
         outSequence.addEvent(eventNoteOn, timeOffset);
 
@@ -74,7 +74,7 @@ void Note::exportMessages(MidiMessageSequence &outSequence, const Clip &clip,
         const double oddTupletFix = double(i % 2) / 1000;
 
         MidiMessage eventNoteOff(MidiMessage::noteOff(this->getTrackChannel(), finalKey));
-        const double endTime = (tupletStart + tupletLength + clip.getBeat()) * timeFactor - oddTupletFix;
+        const double endTime = (tupletStart + tupletLength + 0) * timeFactor - oddTupletFix;
         eventNoteOff.setTimeStamp(endTime);
         outSequence.addEvent(eventNoteOff, timeOffset);
     }

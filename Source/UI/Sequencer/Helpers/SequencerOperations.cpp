@@ -22,7 +22,7 @@
 #include "AnnotationEvent.h"
 #include "AutomationEvent.h"
 #include "NoteComponent.h"
-#include "ClipComponent.h"
+//#include "ClipComponent.h"
 #include "PianoTrackNode.h"
 #include "AutomationTrackNode.h"
 #include "PianoSequence.h"
@@ -30,7 +30,7 @@
 #include "AnnotationsSequence.h"
 #include "KeySignaturesSequence.h"
 #include "MidiTrack.h"
-#include "Pattern.h"
+//#include "Pattern.h"
 #include "SerializationKeys.h"
 #include "Arpeggiator.h"
 #include "Transport.h"
@@ -1362,12 +1362,12 @@ void SequencerOperations::copyToClipboard(Clipboard &clipboard, const Lasso &sel
                 trackRoot.appendChild(noteComponent->getNote().serialize(), nullptr);
                 firstBeat = jmin(firstBeat, noteComponent->getBeat());
             }
-            else if (const ClipComponent *clipComponent =
-                dynamic_cast<ClipComponent *>(trackSelection->getUnchecked(i)))
-            {
-                trackRoot.appendChild(clipComponent->getClip().serialize(), nullptr);
-                firstBeat = jmin(firstBeat, clipComponent->getBeat());
-            }
+//            else if (const ClipComponent *clipComponent =
+//                dynamic_cast<ClipComponent *>(trackSelection->getUnchecked(i)))
+//            {
+//                trackRoot.appendChild(clipComponent->getClip().serialize(), nullptr);
+//                firstBeat = jmin(firstBeat, clipComponent->getBeat());
+//            }
         }
 
         tree.appendChild(trackRoot, nullptr);
@@ -1467,32 +1467,32 @@ void SequencerOperations::pasteFromClipboard(Clipboard &clipboard, ProjectNode &
             }
         }
 
-        forEachValueTreeChildWithType(root, patternElement, Serialization::Midi::pattern)
-        {
-            Array<Clip> pastedClips;
-            if (auto *targetPattern = selectedTrack->getPattern())
-            {
-                forEachValueTreeChildWithType(patternElement, clipElement, Serialization::Midi::clip)
-                {
-                    Clip &&c = Clip(targetPattern).withParameters(clipElement).copyWithNewId();
-                    pastedClips.add(c.withDeltaBeat(deltaBeat));
-                }
-        
-                if (pastedClips.size() > 0)
-                {
-                    if (!didCheckpoint)
-                    {
-                        targetPattern->checkpoint();
-                        didCheckpoint = true;
-                    }
-        
-                    for (Clip &c : pastedClips)
-                    {
-                        targetPattern->insert(c, true);
-                    }
-                }
-            }
-        }
+//        forEachValueTreeChildWithType(root, patternElement, Serialization::Midi::pattern)
+//        {
+//            Array<Clip> pastedClips;
+//            if (auto *targetPattern = selectedTrack->getPattern())
+//            {
+//                forEachValueTreeChildWithType(patternElement, clipElement, Serialization::Midi::clip)
+//                {
+//                    Clip &&c = Clip(targetPattern).withParameters(clipElement).copyWithNewId();
+//                    pastedClips.add(c.withDeltaBeat(deltaBeat));
+//                }
+//
+//                if (pastedClips.size() > 0)
+//                {
+//                    if (!didCheckpoint)
+//                    {
+//                        targetPattern->checkpoint();
+//                        didCheckpoint = true;
+//                    }
+//
+//                    for (Clip &c : pastedClips)
+//                    {
+//                        targetPattern->insert(c, true);
+//                    }
+//                }
+//            }
+//        }
     }
 }
 
@@ -1808,11 +1808,11 @@ void SequencerOperations::rescale(Lasso &selection, Scale::Ptr scaleA, Scale::Pt
 
 // Tries to detect if there's a one key signature that affects the whole sequence.
 // If there's none, of if there's more than one, returns false.
-bool SequencerOperations::findHarmonicContext(const Lasso &selection, const Clip &clip,
+bool SequencerOperations::findHarmonicContext(const Lasso &selection,
     WeakReference<MidiTrack> keysTrack, Scale::Ptr &outScale, Note::Key &outRootKey)
 {
-    const auto startBeat = SequencerOperations::findStartBeat(selection) + clip.getBeat();
-    const auto endBeat = SequencerOperations::findEndBeat(selection) + clip.getBeat();
+    const auto startBeat = SequencerOperations::findStartBeat(selection) + 0;
+    const auto endBeat = SequencerOperations::findEndBeat(selection) + 0;
 
     if (const auto *keySignatures = dynamic_cast<KeySignaturesSequence *>(keysTrack->getSequence()))
     {
@@ -1941,8 +1941,8 @@ ScopedPointer<MidiTrackNode> SequencerOperations::createPianoTrack(const Lasso &
 
     ScopedPointer<MidiTrackNode> newItem = new PianoTrackNode({});
 
-    const Clip clip(track->getPattern());
-    track->getPattern()->insert(clip, false);
+//    const Clip clip(track->getPattern());
+//    track->getPattern()->insert(clip, false);
 
     newItem->setTrackColour(colour, false);
     newItem->setTrackInstrumentId(instrumentId, false);
@@ -1961,7 +1961,7 @@ ScopedPointer<MidiTrackNode> SequencerOperations::createPianoTrack(const Lasso &
     return newItem;
 }
 
-ScopedPointer<MidiTrackNode> SequencerOperations::createPianoTrack(const Array<Note> &events, const Pattern *clips)
+ScopedPointer<MidiTrackNode> SequencerOperations::createPianoTrack(const Array<Note> &events)
 {
     if (events.size() == 0)
     {
@@ -1985,19 +1985,19 @@ ScopedPointer<MidiTrackNode> SequencerOperations::createPianoTrack(const Array<N
     sequence->reset();
     sequence->insertGroup(copiedContent, false);
 
-    Array<Clip> copiedClips;
-    auto *pattern = newItem->getPattern();
-    for (const auto *clip : clips->getClips())
-    {
-        copiedClips.add(clip->copyWithNewId(pattern));
-    }
-    pattern->reset();
-    pattern->insertGroup(copiedClips, false);
+//    Array<Clip> copiedClips;
+//    auto *pattern = newItem->getPattern();
+//    for (const auto *clip : clips->getClips())
+//    {
+//        copiedClips.add(clip->copyWithNewId(pattern));
+//    }
+//    pattern->reset();
+//    pattern->insertGroup(copiedClips, false);
 
     return newItem;
 }
 
-ScopedPointer<MidiTrackNode> SequencerOperations::createAutomationTrack(const Array<AutomationEvent> &events, const Pattern *clips)
+ScopedPointer<MidiTrackNode> SequencerOperations::createAutomationTrack(const Array<AutomationEvent> &events)
 {
     if (events.size() == 0) { return{}; }
 
@@ -2020,14 +2020,14 @@ ScopedPointer<MidiTrackNode> SequencerOperations::createAutomationTrack(const Ar
     sequence->reset();
     sequence->insertGroup(copiedContent, false);
 
-    Array<Clip> copiedClips;
-    auto *pattern = newItem->getPattern();
-    for (const auto *clip : clips->getClips())
-    {
-        copiedClips.add(clip->copyWithNewId(pattern));
-    }
-    pattern->reset();
-    pattern->insertGroup(copiedClips, false);
+//    Array<Clip> copiedClips;
+//    auto *pattern = newItem->getPattern();
+//    for (const auto *clip : clips->getClips())
+//    {
+//        copiedClips.add(clip->copyWithNewId(pattern));
+//    }
+//    pattern->reset();
+//    pattern->insertGroup(copiedClips, false);
 
     return newItem;
 }

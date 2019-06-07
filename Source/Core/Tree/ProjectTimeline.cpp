@@ -21,7 +21,7 @@
 #include "TimeSignaturesSequence.h"
 #include "KeySignaturesSequence.h"
 #include "ProjectNode.h"
-#include "Pattern.h"
+//#include "Pattern.h"
 #include "Icons.h"
 #include "SerializationKeys.h"
 
@@ -302,10 +302,10 @@ void ProjectTimeline::dispatchChangeProjectBeatRange()
 // Timeline sequences are the case where there are no patterns and clips
 // So just leave this empty:
 
-void ProjectTimeline::dispatchAddClip(const Clip &clip) {}
-void ProjectTimeline::dispatchChangeClip(const Clip &oldClip, const Clip &newClip) {}
-void ProjectTimeline::dispatchRemoveClip(const Clip &clip) {}
-void ProjectTimeline::dispatchPostRemoveClip(Pattern *const pattern) {}
+//void ProjectTimeline::dispatchAddClip(const Clip &clip) {}
+//void ProjectTimeline::dispatchChangeClip(const Clip &oldClip, const Clip &newClip) {}
+//void ProjectTimeline::dispatchRemoveClip(const Clip &clip) {}
+//void ProjectTimeline::dispatchPostRemoveClip(Pattern *const pattern) {}
 
 ProjectNode *ProjectTimeline::getProject() const noexcept
 {

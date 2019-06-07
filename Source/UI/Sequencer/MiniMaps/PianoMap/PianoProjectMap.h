@@ -17,7 +17,7 @@
 
 #pragma once
 
-#include "Clip.h"
+//#include "Clip.h"
 #include "Note.h"
 #include "ProjectListener.h"
 #include "ProjectMapNoteComponent.h"
@@ -49,9 +49,9 @@ public:
     void onChangeMidiEvent(const MidiEvent &e1, const MidiEvent &e2) override;
     void onRemoveMidiEvent(const MidiEvent &event) override;
 
-    void onAddClip(const Clip &clip) override;
-    void onChangeClip(const Clip &oldClip, const Clip &newClip) override;
-    void onRemoveClip(const Clip &clip) override;
+//    void onAddClip(const Clip &clip) override;
+//    void onChangeClip(const Clip &oldClip, const Clip &newClip) override;
+//    void onRemoveClip(const Clip &clip) override;
 
     void onAddTrack(MidiTrack *const track) override;
     void onRemoveTrack(MidiTrack *const track) override;
@@ -79,8 +79,9 @@ private:
     ProjectNode &project;
     
     using SequenceMap = FlatHashMap<Note, UniquePointer<ProjectMapNoteComponent>, MidiEventHash>;
-    using PatternMap = FlatHashMap<Clip, UniquePointer<SequenceMap>, ClipHash>;
-    PatternMap patternMap;
+//    using PatternMap = FlatHashMap<Clip, UniquePointer<SequenceMap>, ClipHash>;
+//    PatternMap patternMap;
+    SequenceMap sequenceMap;
 
     void triggerBatchRepaintFor(ProjectMapNoteComponent *target);
     void handleAsyncUpdate() override;

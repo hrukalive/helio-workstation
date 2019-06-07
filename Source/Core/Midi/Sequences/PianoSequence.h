@@ -33,7 +33,7 @@ public:
     //===------------------------------------------------------------------===//
 
     void importMidi(const MidiMessageSequence &sequence, short timeFormat) override;
-    void exportMidi(MidiMessageSequence &outSequence, const Clip &clip,
+    void exportMidi(MidiMessageSequence &outSequence,
         bool soloPlaybackMode, double timeAdjustment, double timeFactor) const override;
 
     //===------------------------------------------------------------------===//

@@ -206,8 +206,8 @@ PianoRollSelectionMenu::PianoRollSelectionMenu(WeakReference<Lasso> lasso, WeakR
 {
     if (this->lasso->getNumSelected() > 0)
     {
-        const Clip &clip = this->lasso->getFirstAs<NoteComponent>()->getClip();
-        if (!SequencerOperations::findHarmonicContext(*this->lasso, clip, keySignatures,
+//        const Clip &clip = this->lasso->getFirstAs<NoteComponent>()->getClip();
+        if (!SequencerOperations::findHarmonicContext(*this->lasso, keySignatures,
             this->harmonicContextScale, this->harmonicContextKey))
         {
             DBG("Warning: harmonic context could not be detected");

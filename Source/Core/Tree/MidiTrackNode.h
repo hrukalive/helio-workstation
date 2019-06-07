@@ -23,7 +23,7 @@
 //#include "TrackedItem.h"
 //#include "Delta.h"
 
-class Pattern;
+//class Pattern;
 class MidiSequence;
 class ProjectNode;
 class InstrumentDescription;
@@ -74,7 +74,7 @@ public:
     void setTrackControllerNumber(int val, bool sendNotifications) override;
 
     MidiSequence *getSequence() const noexcept override;
-    Pattern *getPattern() const noexcept override;
+//    Pattern *getPattern() const noexcept override;
 
     //===------------------------------------------------------------------===//
     // ProjectEventDispatcher
@@ -85,10 +85,10 @@ public:
     void dispatchRemoveEvent(const MidiEvent &event) override;
     void dispatchPostRemoveEvent(MidiSequence *const layer) override;
 
-    void dispatchAddClip(const Clip &clip) override;
-    void dispatchChangeClip(const Clip &oldClip, const Clip &newClip) override;
-    void dispatchRemoveClip(const Clip &clip) override;
-    void dispatchPostRemoveClip(Pattern *const pattern) override;
+//    void dispatchAddClip(const Clip &clip) override;
+//    void dispatchChangeClip(const Clip &oldClip, const Clip &newClip) override;
+//    void dispatchRemoveClip(const Clip &clip) override;
+//    void dispatchPostRemoveClip(Pattern *const pattern) override;
 
     void dispatchChangeTrackProperties() override;
     void dispatchChangeProjectBeatRange() override;
@@ -122,7 +122,7 @@ protected:
     ProjectNode *lastFoundParent;
 
     ScopedPointer<MidiSequence> sequence;
-    ScopedPointer<Pattern> pattern;
+//    ScopedPointer<Pattern> pattern;
     
 protected:
 
